@@ -1,0 +1,41 @@
+@charset "UTF-8";
+footer {
+  background-color: #5c5c5c; /* Color de fondo gris */
+  color: white; /* Texto en blanco */
+  text-align: center;
+  padding: 20px 0;
+}
+
+footer .btn {
+  background-color: green; /* Color de los botones */
+  color: white;
+  border-radius: 5px;
+  padding: 5px 15px;
+  text-decoration: none;
+}
+
+footer .btn:hover {
+  background-color: #008000; /* Verde más oscuro al pasar el mouse */
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-left, .footer-right {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-left {
+  text-align: left;
+}
+
+.footer-right {
+  text-align: right;
+}/*# sourceMappingURL=footer.css.map */

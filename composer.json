@@ -6,6 +6,9 @@
             "App\\": "src/"
         }
     },
+    "scripts": {
+        "start":"php -S localhost:8000 -t public"
+    },
     "authors": [
         {
             "name": "Alvaro Estacio Ruiz",

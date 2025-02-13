@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
         "target": "es6",	// Genera JavaScript ES6, compatible con todos los navegadores modernos
-        "outDir": "./dist",	  // Carpeta donde se guardará el código compilado 
-        "rootDir": "./src",	  // Carpeta donde estarán los archivos TypeScript
+        "outDir": "./public/js",	  // Carpeta donde se guardará el código compilado 
+        "rootDir": "./src/ts",	  // Carpeta donde estarán los archivos TypeScript
         "module": "commonjs",   // Para Node.js
         "strict": true,
         "sourceMap": true, //Si quieres depurar el código TypeScript en el navegador o en Node.js
