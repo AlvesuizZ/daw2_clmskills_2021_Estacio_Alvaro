@@ -1,7 +1,7 @@
 # daw2_clmskills_2021_Estacio_Alvaro
 Soy Álvaro Estacio Ruiz y estare desarrollando el proyecto de las clmskills de 2021
 
-#TECNOLOGIAS
+# TECNOLOGIAS
 
 node -> 20.18.0
 php -> 8.2.27
