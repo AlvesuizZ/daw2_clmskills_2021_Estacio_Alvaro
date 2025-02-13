@@ -1,0 +1,17 @@
+{
+    "name": "alumnado/daw2_clmskills_2021_estacio_alvaro",
+    "description": "Proyecto de desarrollo de las clmskills 2021",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Alvaro Estacio Ruiz",
+            "email": "alvesuiz@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
