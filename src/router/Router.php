@@ -11,7 +11,11 @@ class Router{
 
     public function loadRoutes()
     {
-        $this->routes['/']  = ['controller' => 'Controller', 'action' => 'index'];
+        $this->routes['/'] = ['controller' => 'HomeController', 'action' => 'index'];
+        $this->routes['/login'] = ['controller' => 'AuthController', 'action' => 'login'];
+        $this->routes['/register'] = ['controller' => 'AuthController', 'action' => 'register'];
+        $this->routes['/logout'] = ['controller' => 'AuthController', 'action' => 'logout'];
+        $this->routes['/category/{id}'] = ['controller' => 'AnimalController', 'action' => 'showByCategory'];
     }
 
     public function handleRequest()
