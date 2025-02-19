@@ -18,8 +18,8 @@ class AnimalController {
         $this->categoryModel = new Category();
     }
 
-    public function showByCategory($categoryId) {
-        $animals = $this->animalModel->getByCategory($categoryId);
+    public function showByCategory($idcategoria) {
+        $animals = $this->animalModel->getByCategory($idcategoria);
         $categories = $this->categoryModel->getAll();
         echo $this->twig->render('animals.twig', [
             'user' => $_SESSION['user'] ?? null,

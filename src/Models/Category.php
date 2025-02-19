@@ -12,7 +12,7 @@ class Category {
     }
 
     public function getAll() {
-        $stmt = $this->db->query("SELECT id, name FROM categories ORDER BY name ASC");
+        $stmt = $this->db->query("SELECT idcategoria, nombre FROM categorias ORDER BY nombre ASC");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

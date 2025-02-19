@@ -11,9 +11,9 @@ class Animal {
         $this->db = Database::getInstance()->getConnection();
     }
 
-    public function getByCategory($categoryId) {
-        $stmt = $this->db->prepare("SELECT id, name, image, summary FROM animals WHERE category_id = :category_id");
-        $stmt->execute(['category_id' => $categoryId]);
+    public function getByCategory($idcategoria) {
+        $stmt = $this->db->prepare("SELECT idanimal, nombrecomun, nombrecientifico, resumen, foto FROM animals WHERE idcategoria = :idcategoria");
+        $stmt->execute(['category_id' => $idcategoria]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
