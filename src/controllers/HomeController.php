@@ -3,7 +3,7 @@ namespace App\Controllers;
 
 use Twig\Environment;
 use Twig\Loader\FileSystemLoader;
-use Src\Models\Category;
+use App\Models\Category;
 
 class HomeController {
     private $twig;

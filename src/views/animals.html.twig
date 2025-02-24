@@ -1,21 +1,98 @@
-{% extends 'layout.twig' %}
+{% extends 'layout.html.twig' %}
 
-{% block title %}Animales{% endblock %}
+{% block title %}Cátalogo de Animales{% endblock %}
 
 {% block content %}
-<h2 class="text-center">Animales de la categoría seleccionada</h2>
-<div class="row mt-4">
-    {% if animals %}
-        {% for animal in animals %}
-            <div class="col-12 col-md-4 col-lg-3 text-center">
-                <img src="/images/{{ animal.image }}" alt="{{ animal.name }}" class="img-fluid rounded-circle" width="140" height="140">
-                <h4>{{ animal.name }}</h4>
-                <p>{{ animal.summary }}</p>
-                <p><a class="btn btn-secondary" href="/animal/{{ animal.id }}">Ver detalles &raquo;</a></p>
-            </div>
-        {% endfor %}
-    {% else %}
-        <p class="text-center">No hay animales en esta categoría.</p>
-    {% endif %}
+<h2>Catálogo de animales</h2>
+<p><strong>Animales encontrados:</strong> {{ totalAnimals }}</p>
+
+<!-- Galería de imágenes paginada -->
+<div class="d-flex flex-wrap justify-content-center">
+    {% for animal in animals %}
+        <img src="{{ animal.foto }}" 
+            alt="{{ animal.nombre }}" 
+            class="img-thumbnail m-2 animal-img" 
+            data-id="{{ animal.id }}" 
+            data-nombre="{{ animal.nombre }}" 
+            data-reino="{{ animal.taxonomia.reino }}" 
+            data-filo="{{ animal.taxonomia.filo }}" 
+            data-clase="{{ animal.taxonomia.clase }}" 
+            data-orden="{{ animal.taxonomia.orden }}" 
+            data-familia="{{ animal.taxonomia.familia }}" 
+            data-genero="{{ animal.taxonomia.genero }}" 
+            data-especie="{{ animal.taxonomia.especie }}" 
+            data-descripcion="{{ animal.descripcion }}"
+            style="width: 100px; height: 100px; cursor: pointer;">
+    {% endfor %}
 </div>
+
+<!-- Paginación con Bootstrap -->
+<nav aria-label="Paginación">
+    <ul class="pagination justify-content-center">
+        {% if currentPage > 1 %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ currentPage - 1 }}&idcategoria={{ idcategoria }}">Anterior</a>
+            </li>
+        {% endif %}
+
+        {% for i in 1..totalPages %}
+            <li class="page-item {{ i == currentPage ? 'active' : '' }}">
+                <a class="page-link" href="?page={{ i }}&idcategoria={{ idcategoria }}">{{ i }}</a>
+            </li>
+        {% endfor %}
+
+        {% if currentPage < totalPages %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ currentPage + 1 }}&idcategoria={{ idcategoria }}">Siguiente</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+
+<!-- Tarjeta de información del animal -->
+<div id="animal-info" class="container mt-4" style="display: none;">
+    <h3 id="animal-title" class="text-center"></h3>
+    <div class="row">
+        <!-- Columna izquierda (Verde oscura) -->
+        <div class="col-md-4 bg-success text-white p-3">
+            <h5>Taxonomía</h5>
+            <p><strong>Reino:</strong> <span id="animal-reino"></span></p>
+            <p><strong>Filo:</strong> <span id="animal-filo"></span></p>
+            <p><strong>Clase:</strong> <span id="animal-clase"></span></p>
+            <p><strong>Orden:</strong> <span id="animal-orden"></span></p>
+            <p><strong>Familia:</strong> <span id="animal-familia"></span></p>
+            <p><strong>Género:</strong> <span id="animal-genero"></span></p>
+            <p><strong>Especie:</strong> <span id="animal-especie"></span></p>
+        </div>
+
+        <!-- Columna derecha (Blanca) -->
+        <div class="col-md-8 bg-light p-3">
+            <h5>Descripción</h5>
+            <p id="animal-descripcion"></p>
+        </div>
+    </div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".animal-img").forEach(img => {
+        img.addEventListener("click", function () {
+            document.getElementById("animal-title").textContent = this.dataset.nombre;
+            document.getElementById("animal-reino").textContent = this.dataset.reino;
+            document.getElementById("animal-filo").textContent = this.dataset.filo;
+            document.getElementById("animal-clase").textContent = this.dataset.clase;
+            document.getElementById("animal-orden").textContent = this.dataset.orden;
+            document.getElementById("animal-familia").textContent = this.dataset.familia;
+            document.getElementById("animal-genero").textContent = this.dataset.genero;
+            document.getElementById("animal-especie").textContent = this.dataset.especie;
+            document.getElementById("animal-descripcion").textContent = this.dataset.descripcion;
+
+            // Mostrar la tarjeta
+            document.getElementById("animal-info").style.display = "block";
+        });
+    });
+});
+</script>
+
+
+
 {% endblock %}

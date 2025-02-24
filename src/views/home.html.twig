@@ -5,14 +5,46 @@
 {% block content %}
     <div class="text-center">
         <h1 class="display-1">Cátalogo de animales</h1>
-        <h2 class="display-3">Los otros Habitantes de la tierra</h2>
+        <h2 class="display-3">Los otros Habitantes de la Tierra</h2>
     </div>
-    <div class="row mt-4">
-        {% for animal in animals %}
-        <div class="col-12 col-md-4 col-lg-2 text-center">
-            <img src="/images/{{ animal.image }}" alt="{{ animal.name }}" class="img-fluid rounded-circle" width="140" height="140">
-            <p><a class="btn btn-secondary" href="/animal/{{ animal.id }}">View details &raquo;</a></p>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-4 col-lg-2 text-center">
+                <a href="#">
+                    <img src="/img/animales1.jpg" alt="Animal 1" class="img-fluid rounded-circle" width="140" height="140">
+                </a>
+                <p>Animal 1</p>
+                <p><a class="btn btn-secondary" href="#">Ver detalles &raquo;</a></p>
+            </div>
+            <div class="col-12 col-md-4 col-lg-2 text-center">
+                <a href="#">
+                    <img src="/img/animales2.jpg" alt="Animal 2" class="img-fluid rounded-circle" width="140" height="140">
+                </a>
+                <p>Animal 2</p>
+                <p><a class="btn btn-secondary" href="#">Ver detalles &raquo;</a></p>
+            </div>
+            <div class="col-12 col-md-4 col-lg-2 text-center">
+                <a href="#">
+                    <img src="/img/animales3.jpg" alt="Animal 3" class="img-fluid rounded-circle" width="140" height="140">
+                </a>
+                <p>Animal 3</p>
+                <p><a class="btn btn-secondary" href="#">Ver detalles &raquo;</a></p>
+            </div>
+            <div class="col-12 col-md-4 col-lg-2 text-center">
+                <a href="#">
+                    <img src="/img/animales4.jpg" alt="Animal 4" class="img-fluid rounded-circle" width="140" height="140">
+                </a>
+                <p>Animal 4</p>
+                <p><a class="btn btn-secondary" href="#">Ver detalles &raquo;</a></p>
+            </div>
+            <div class="col-12 col-md-4 col-lg-2 text-center">
+                <a href="#">
+                    <img src="/img/animales5.jpg" alt="Animal 5" class="img-fluid rounded-circle" width="140" height="140">
+                </a>
+                <p>Animal 5</p>
+                <p><a class="btn btn-secondary" href="#">Ver detalles &raquo;</a></p>
+            </div>
         </div>
-        {% endfor %}
     </div>
 {% endblock %}

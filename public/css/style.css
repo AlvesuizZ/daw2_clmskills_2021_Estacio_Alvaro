@@ -1,0 +1,17 @@
+.animal-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.animal-thumbnail {
+    width: 100px;
+    text-align: center;
+}
+
+.animal-thumbnail img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}

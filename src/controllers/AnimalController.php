@@ -1,17 +1,17 @@
 <?php
-namespace Src\Controllers;
+namespace App\Controllers;
 
 use Twig\Environment;
 use Twig\Loader\FileSystemLoader;
-use Src\Models\Animal;
-use Src\Models\Category;
+use App\Models\Animal;
+use App\Models\Category;
 
 class AnimalController {
     private $twig;
     private $animalModel;
     private $categoryModel;
 
-    public function __construct(Environment $twig) {
+    public function __construct() {
         $loader = new FilesystemLoader(__DIR__ . '/../views');
         $this->twig = new Environment($loader);
         $this->animalModel = new Animal();
@@ -19,12 +19,30 @@ class AnimalController {
     }
 
     public function showByCategory($idcategoria) {
-        $animals = $this->animalModel->getByCategory($idcategoria);
-        $categories = $this->categoryModel->getAll();
-        echo $this->twig->render('animals.twig', [
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit = 5;
+        $offset = ($page - 1) * $limit;
+    
+        $animals = $this->animalModel->getByCategoryPaginated($idcategoria, $limit, $offset);
+        $totalanimals = $this->animalModel->countByCategory($idcategoria);
+        $totalPages = ceil($totalanimals / $limit);
+    
+        foreach ($animals as &$animal) {
+            if (!empty($animal['foto'])) {
+                $animal['foto'] = 'data:image/jpeg;base64,' . base64_encode($animal['foto']);
+            }
+        }
+
+        $animal['taxonomia'] = $this->animalModel->getTaxonomy($animal['idanimal']);
+    
+        echo $this->twig->render('animals.html.twig', [
             'user' => $_SESSION['user'] ?? null,
-            'categories' => $categories,
-            'animals' => $animals
+            'animals' => $animals,
+            'idcategoria' => $idcategoria,
+            'currentPage' => $page,
+            'totalPages' => $totalPages
         ]);
     }
+    
+
 }

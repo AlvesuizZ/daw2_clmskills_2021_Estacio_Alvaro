@@ -21,23 +21,46 @@ class Router{
     public function handleRequest()
     {
         $path = parse_url($_SERVER['REQUEST_URI'])['path'];
+        $originalPath = $path;
+        error_log("Ruta original: " . $originalPath);
+    
+        $parts = explode('/', trim($path, '/'));
+        $paramValue = null;
+    
+        // Verificar si el último segmento es un número (ID)
+        if (is_numeric(end($parts))) {
+            $paramValue = array_pop($parts); // Extraer el ID
+            $path = '/' . implode('/', $parts) . '/{id}'; // Convertir la ruta a formato dinámico
+        }
+    
+        error_log("Ruta procesada: " . $path);
+    
         if (isset($this->routes[$path])) {
-            $route           = $this->routes[$path];
-            $controllerClass = 'App\\controllers\\' . $route['controller'];
-            error_log($controllerClass);
+            $route = $this->routes[$path];
+            $controllerClass = 'App\\Controllers\\' . $route['controller'];
+            error_log("Cargando controlador: " . $controllerClass);
+            
             $action = $route['action'];
+    
             if (class_exists($controllerClass) && method_exists($controllerClass, $action)) {
                 $controller = new $controllerClass();
-                $controller->$action();
+    
+                if ($paramValue !== null) {
+                    error_log("Parámetro ID: " . $paramValue);
+                    $controller->$action($paramValue); // Pasar el ID al controlador
+                } else {
+                    $controller->$action(); // Sin ID
+                }
             } else {
                 http_response_code(404);
-                echo '404';
+                echo '404 - Controlador o acción no encontrados';
             }
         } else {
             http_response_code(404);
-            echo '404';
+            echo '404 - Ruta no encontrada';
         }
     }
+    
 }
 
 $route = new Router();
