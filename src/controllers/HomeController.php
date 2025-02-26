@@ -16,8 +16,12 @@ class HomeController {
         $this->categoryModel = new Category();
     }
 
+
     public function index() {
+        session_start();
+
+        $user_id = $_COOKIE['user_id'] ?? null;
         $categories = $this->categoryModel->getAll();
-        echo $this->twig->render('home.html.twig', ['user' => $_SESSION['user'] ?? null, 'categories' => $categories]);
+        echo $this->twig->render('home.html.twig', ['user_id' => $user_id, 'categories' => $categories]);
     }
 }

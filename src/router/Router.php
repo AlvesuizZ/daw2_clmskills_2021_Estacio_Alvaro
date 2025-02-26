@@ -12,10 +12,18 @@ class Router{
     public function loadRoutes()
     {
         $this->routes['/'] = ['controller' => 'HomeController', 'action' => 'index'];
-        $this->routes['/login'] = ['controller' => 'AuthController', 'action' => 'login'];
-        $this->routes['/register'] = ['controller' => 'AuthController', 'action' => 'register'];
+        $this->routes['/login'] = ['controller' => 'AuthController', 'action' => 'showlogin'];
+        $this->routes['/loginPost'] = ['controller' => 'AuthController', 'action' => 'login'];
+        $this->routes['/register'] = ['controller' => 'AuthController', 'action' => 'showRegister'];
+        $this->routes['/registerPost'] = ['controller' => 'AuthController', 'action' => 'register'];
         $this->routes['/logout'] = ['controller' => 'AuthController', 'action' => 'logout'];
         $this->routes['/category/{id}'] = ['controller' => 'AnimalController', 'action' => 'showByCategory'];
+        $this->routes['/categorias'] = ['controller' => 'CategoriaController', 'action' => 'index'];
+        $this->routes['/createCategoria'] = ['controller' => 'CategoriaController', 'action' => 'create'];
+        $this->routes['/createCategoriaPost'] = ['controller' => 'CategoriaController', 'action' => 'store'];
+        $this->routes['/categoriaDelete/{id}'] = ['controller' => 'CategoriaController', 'action' => 'delete'];
+        $this->routes['/editCategoria/{id}'] = ['controller' => 'CategoriaController', 'action' => 'edit'];
+        $this->routes['/editCategoriaPost/{id}'] = ['controller' => 'CategoriaController', 'action' => 'update'];
     }
 
     public function handleRequest()

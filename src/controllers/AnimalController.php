@@ -31,16 +31,24 @@ class AnimalController {
             if (!empty($animal['foto'])) {
                 $animal['foto'] = 'data:image/jpeg;base64,' . base64_encode($animal['foto']);
             }
+        
+            if (isset($animal['idanimal'])) {
+                $animal['taxonomia'] = $this->animalModel->getTaxonomy($animal['idanimal']) ?? [];
+                error_log("Taxonomía de {$animal['nombrecomun']}: " . print_r($animal['taxonomia'], true));
+            }
         }
 
-        $animal['taxonomia'] = $this->animalModel->getTaxonomy($animal['idanimal']);
+        $categories = $this->categoryModel->getAll();
+        $user_id = $_COOKIE['user_id'] ?? null;
     
         echo $this->twig->render('animals.html.twig', [
             'user' => $_SESSION['user'] ?? null,
             'animals' => $animals,
+            'categories' => $categories,
             'idcategoria' => $idcategoria,
             'currentPage' => $page,
-            'totalPages' => $totalPages
+            'totalPages' => $totalPages,
+            'user_id' => $user_id
         ]);
     }
     

@@ -1,0 +1,19 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+<h2>Insertar nueva categoría</h2>
+
+<form action="/createCategoriaPost" method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="nombre" class="form-label">Escribe nuevo nombre:</label>
+        <input type="text" name="nombre" id="nombre" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="imagen" class="form-label">Selecciona nueva imagen:</label>
+        <input type="file" name="foto" id="foto" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-success">Insertar Categoría</button>
+</form>
+{% endblock %}

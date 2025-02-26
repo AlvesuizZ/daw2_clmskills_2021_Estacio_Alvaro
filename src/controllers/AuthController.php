@@ -2,45 +2,80 @@
 
 namespace App\Controllers;
 
+use Twig\Environment;
+use Twig\Loader\FileSystemLoader;
 use App\Models\User;
 
 class AuthController {
+
+    private $twig;
+    private $userModel;
+
+    public function __construct() {
+        session_start();
+        $loader = new FilesystemLoader(__DIR__ . '/../views');
+        $this->twig = new Environment($loader);
+        $this->userModel = new User();
+    }
+
+    public function showRegister() {
+        $user_id = $_COOKIE['user_id'] ?? null;
+        echo $this->twig->render('register.html.twig', ['user_id' => $user_id]);
+    }
+
+    public function showLogIn() {
+        $user_id = $_COOKIE['user_id'] ?? null;
+        echo $this->twig->render('login.html.twig', ['user_id' => $user_id]);
+    }
+
     public function login() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-            
-            $user = new User();
-            if ($user->authenticate($username, $password)) {
-                $_SESSION['user'] = $username;
-                header('Location: /');
-                exit();
+            $email = $_POST['email'] ?? '';
+            $password = $_POST['password'] ?? '';
+
+            $user = $this->userModel->login($email, $password);
+            if ($user) {
+                error_log('a');
+                setcookie('user_id', $user['codusuario'], time() + (7 * 24 * 60 * 60), "/", "", false, true);
+                header("Location: /");
+                exit;
             } else {
-                echo "<p>Usuario o contraseña incorrectos</p>";
+                echo "Credenciales incorrectas.";
             }
         }
-        include __DIR__ . '/../Views/login.html.twig';
     }
 
     public function register() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = $_POST['username'];
-            $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-            
-            $user = new User();
-            if ($user->register($username, $password)) {
-                header('Location: /login');
-                exit();
+            $nombre = $_POST['nombre'] ?? '';
+            $direccion = $_POST['direccion'] ?? '';
+            $email = $_POST['email'] ?? '';
+            $password = $_POST['password'] ?? '';
+            $telef = $_POST['telef'] ?? '';
+            error_log($nombre);
+            error_log($direccion);
+            error_log($email);
+            error_log($password);
+            error_log($telef);
+
+            if (empty($nombre) || empty($direccion) || empty($email) || empty($password) || empty($telef)) {
+                echo "Todos los campos son obligatorios.";
+                return;
+            }
+
+            if ($this->userModel->register($nombre, $direccion, $email, $password, $telef)) {
+                header("Location: /login");
+                exit;
             } else {
-                echo "<p>Error al registrar usuario</p>";
+                echo "Error al registrar usuario.";
             }
         }
-        include __DIR__ . '/../Views/register.html.twig';
     }
 
     public function logout() {
-        session_destroy();
-        header('Location: /');
-        exit();
+        // Eliminamos la cookie de usuario
+        setcookie('user_id', '', time() - 3600, "/", "", false, true);
+        header("Location: /");
+        exit;
     }
 }

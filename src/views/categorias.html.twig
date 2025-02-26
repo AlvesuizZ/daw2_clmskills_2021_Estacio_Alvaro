@@ -1,0 +1,41 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">GESTIÓN DE CATEGORÍAS</h2>
+    
+    <div class="d-flex justify-content-end">
+        <a href="/createCategoria" class="btn btn-success">Insertar Categoría</a>
+    </div>
+    
+    <table class="table table-bordered mt-3">
+        <thead class="table-light">
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Imagen</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for categoria in categories %}
+            <tr>
+                <td>{{ categoria.idcategoria }}</td>
+                <td>{{ categoria.nombre }}</td>
+                <td>
+                    {% if categoria.foto %}
+                        <img src="{{ categoria.foto }}" alt="{{ categoria.nombre }}" width="100">
+                    {% else %}
+                        <img src="/ruta/a/imagen_default.jpg" alt="Sin imagen" width="100">
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="editCategoria/{{ categoria.idcategoria }}" class="btn btn-warning">Modificar</a>
+                    <a href="categoriaDelete/{{ categoria.idcategoria }}" class="btn btn-danger">Borrar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

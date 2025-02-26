@@ -4,27 +4,31 @@
 
 {% block content %}
 <h2>Catálogo de animales</h2>
-<p><strong>Animales encontrados:</strong> {{ totalAnimals }}</p>
 
-<!-- Galería de imágenes paginada -->
+
 <div class="d-flex flex-wrap justify-content-center">
     {% for animal in animals %}
         <img src="{{ animal.foto }}" 
             alt="{{ animal.nombre }}" 
             class="img-thumbnail m-2 animal-img" 
-            data-id="{{ animal.id }}" 
-            data-nombre="{{ animal.nombre }}" 
-            data-reino="{{ animal.taxonomia.reino }}" 
-            data-filo="{{ animal.taxonomia.filo }}" 
-            data-clase="{{ animal.taxonomia.clase }}" 
-            data-orden="{{ animal.taxonomia.orden }}" 
-            data-familia="{{ animal.taxonomia.familia }}" 
-            data-genero="{{ animal.taxonomia.genero }}" 
-            data-especie="{{ animal.taxonomia.especie }}" 
-            data-descripcion="{{ animal.descripcion }}"
+            data-animal="{{ {
+                'idanimal': animal.idanimal,
+                'nombre': animal.nombrecomun,
+                'descripcion': animal.resumen,
+                'nombrecientifico': animal.nombrecientifico,
+                'reino': animal.taxonomia.reino,
+                'filo': animal.taxonomia.filo,
+                'clase': animal.taxonomia.clase,
+                'orden': animal.taxonomia.orden,
+                'familia': animal.taxonomia.familia,
+                'genero': animal.taxonomia.genero,
+                'especie': animal.taxonomia.especie
+            } | json_encode | e('html_attr') }}"
             style="width: 100px; height: 100px; cursor: pointer;">
     {% endfor %}
 </div>
+
+
 
 <!-- Paginación con Bootstrap -->
 <nav aria-label="Paginación">
@@ -76,22 +80,26 @@
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".animal-img").forEach(img => {
         img.addEventListener("click", function () {
-            document.getElementById("animal-title").textContent = this.dataset.nombre;
-            document.getElementById("animal-reino").textContent = this.dataset.reino;
-            document.getElementById("animal-filo").textContent = this.dataset.filo;
-            document.getElementById("animal-clase").textContent = this.dataset.clase;
-            document.getElementById("animal-orden").textContent = this.dataset.orden;
-            document.getElementById("animal-familia").textContent = this.dataset.familia;
-            document.getElementById("animal-genero").textContent = this.dataset.genero;
-            document.getElementById("animal-especie").textContent = this.dataset.especie;
-            document.getElementById("animal-descripcion").textContent = this.dataset.descripcion;
+            let animalData = JSON.parse(this.dataset.animal);
 
-            // Mostrar la tarjeta
+            document.getElementById("animal-title").textContent = animalData.nombre;
+            document.getElementById("animal-reino").textContent = animalData.reino || "Desconocido";
+            document.getElementById("animal-filo").textContent = animalData.filo || "Desconocido";
+            document.getElementById("animal-clase").textContent = animalData.clase || "Desconocido";
+            document.getElementById("animal-orden").textContent = animalData.orden || "Desconocido";
+            document.getElementById("animal-familia").textContent = animalData.familia || "Desconocido";
+            document.getElementById("animal-genero").textContent = animalData.genero || "Desconocido";
+            document.getElementById("animal-especie").textContent = animalData.especie || "Desconocido";
+            document.getElementById("animal-descripcion").textContent = animalData.descripcion || "No disponible";
+
+            // Mostrar la tarjeta con los datos del animal seleccionado
             document.getElementById("animal-info").style.display = "block";
         });
     });
 });
 </script>
+
+
 
 
 

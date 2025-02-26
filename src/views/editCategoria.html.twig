@@ -1,0 +1,35 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+<h2>Modificar Categoría</h2>
+
+{% if error %}
+    <p style="color: red;">{{ error }}</p>
+{% endif %}
+{% if success %}
+    <p style="color: green;">{{ success }}</p>
+{% endif %}
+
+<form action="/editCategoriaPost/{{ categoria.idcategoria }}" method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="nombre">Nombre de la categoría:</label>
+        <input type="text" name="nombre" id="nombre" class="form-control" value="{{ categoria.nombre }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label>Imagen actual:</label><br>
+        {% if categoria.foto %}
+            <img src="{{ categoria.foto }}" alt="{{ categoria.nombre }}" width="150">
+        {% else %}
+            <p>No hay imagen</p>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label for="imagen">Selecciona una nueva imagen (opcional):</label>
+        <input type="file" name="foto" id="foto" class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-warning">Actualizar Categoría</button>
+</form>
+{% endblock %}
