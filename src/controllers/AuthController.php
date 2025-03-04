@@ -5,14 +5,17 @@ namespace App\Controllers;
 use Twig\Environment;
 use Twig\Loader\FileSystemLoader;
 use App\Models\User;
+use App\Models\Database;
 
 class AuthController {
 
     private $twig;
     private $userModel;
+    private $db;
 
     public function __construct() {
         session_start();
+        $this->db = Database::getInstance()->getConnection();
         $loader = new FilesystemLoader(__DIR__ . '/../views');
         $this->twig = new Environment($loader);
         $this->userModel = new User();
@@ -40,7 +43,9 @@ class AuthController {
                 header("Location: /");
                 exit;
             } else {
-                echo "Credenciales incorrectas.";
+                echo $this->twig->render('login.html.twig', [
+                    'error' => 'Credenciales incorrectas.',
+                ]);
             }
         }
     }
@@ -71,6 +76,24 @@ class AuthController {
             }
         }
     }
+
+    public function validarEmail() {
+        header('Content-Type: application/json');
+    
+        $email = $_GET['email'] ?? '';
+        if (empty($email)) {
+            echo json_encode(['exists' => false]);
+            exit();
+        }
+    
+        $stmt = $this->db->prepare("SELECT COUNT(*) FROM usuarios WHERE email = ?");
+        $stmt->execute([$email]);
+        $count = $stmt->fetchColumn();
+    
+        echo json_encode(['exists' => $count > 0]);
+        exit();
+    }
+    
 
     public function logout() {
         // Eliminamos la cookie de usuario

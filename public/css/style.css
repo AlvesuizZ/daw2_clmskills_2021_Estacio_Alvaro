@@ -1,3 +1,5 @@
+
+
 .animal-gallery {
     display: flex;
     flex-wrap: wrap;
@@ -14,4 +16,19 @@
     width: 100%;
     height: auto;
     border-radius: 10px;
+}
+
+
+.cookie-banner {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    display: none;
+}
+.cookie-banner button {
+    margin-left: 10px;
 }

@@ -58,5 +58,20 @@ class Category {
         $stmt = $this->db->prepare("DELETE FROM categorias WHERE idcategoria = ?");
         return $stmt->execute([$id]);
     }
+
+    public function deleteAnimalsByCategory($categoryId) {
+        $stmt = $this->db->prepare("DELETE FROM animales WHERE idcategoria = :categoryId");
+        $stmt->bindParam(':categoryId', $categoryId, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+    
+
+    public function existeNombre($nombre) {
+        $stmt = $this->db->prepare("SELECT COUNT(*) FROM categorias WHERE nombre = :nombre");
+        $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchColumn() > 0;
+    }
+    
 }
 

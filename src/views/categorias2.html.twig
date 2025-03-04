@@ -1,0 +1,29 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+<form id="categoriaForm" class="needs-validation" novalidate enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre de la Categoría</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" required>
+        <div class="invalid-feedback">Introduce un nombre válido.</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="foto" class="form-label">Imagen</label>
+        <input type="file" class="form-control" id="foto" name="foto" required>
+        <div class="invalid-feedback">Sube una imagen.</div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Añadir Categoría</button>
+</form>
+
+<div id="mensaje"></div>
+
+<!-- Contenedor donde se mostrarán las categorías -->
+<div class="container mt-4">
+    <div class="row" id="categorias-container"></div>
+</div>
+
+<script src="/js/categorias.js" defer></script>
+
+{% endblock %}

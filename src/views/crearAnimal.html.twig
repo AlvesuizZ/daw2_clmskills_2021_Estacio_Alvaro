@@ -3,46 +3,56 @@
 {% block content %}
 <h2>Añadir Nuevo Animal</h2>
 
+<!-- Mensajes de error o éxito -->
 {% if error %}
-    <p style="color: red;">{{ error }}</p>
+    <div class="alert alert-danger">{{ error }}</div>
 {% endif %}
 {% if success %}
-    <p style="color: green;">{{ success }}</p>
+    <div class="alert alert-success">{{ success }}</div>
 {% endif %}
 
-<form action="/crearAnimalPost" method="POST" enctype="multipart/form-data">
+<form id="insertAnimalForm" action="/crearAnimalPost" method="POST" enctype="multipart/form-data" novalidate>
     <div class="mb-3">
-        <label for="nombrecomun">Nombre Común:</label>
+        <label for="nombrecomun" class="form-label">Nombre Común:</label>
         <input type="text" name="nombrecomun" id="nombrecomun" class="form-control" required>
+        <div class="invalid-feedback">El nombre común es obligatorio y debe ser único.</div>
     </div>
 
     <div class="mb-3">
-        <label for="nombrecientifico">Nombre Científico:</label>
+        <label for="nombrecientifico" class="form-label">Nombre Científico:</label>
         <input type="text" name="nombrecientifico" id="nombrecientifico" class="form-control" required>
+        <div class="invalid-feedback">El nombre científico es obligatorio y debe ser único.</div>
     </div>
 
     <div class="mb-3">
-        <label for="idcategoria">Categoría:</label>
+        <label for="idcategoria" class="form-label">Categoría:</label>
         <select name="idcategoria" id="idcategoria" class="form-select" required>
             <option value="">Seleccione una categoría</option>
             {% for categoria in categories %}
                 <option value="{{ categoria.idcategoria }}">{{ categoria.nombre }}</option>
             {% endfor %}
         </select>
+        <div class="invalid-feedback">Debe seleccionar una categoría.</div>
     </div>
 
     <div class="mb-3">
-        <label for="foto">Imagen:</label>
-        <input type="file" name="foto" id="foto" class="form-control" accept="image/*" required>
+        <label for="foto" class="form-label">Imagen:</label>
+        <input type="file" name="foto" id="foto" class="form-control" accept="image/jpeg, image/png" required>
+        <div class="invalid-feedback">Debe subir una imagen en formato JPG o PNG menor a 150 KB.</div>
     </div>
 
     <div class="mb-3">
-        <label for="resumen">Descripción / Resumen:</label>
+        <label for="resumen" class="form-label">Descripción / Resumen:</label>
         <textarea name="resumen" id="resumen" class="form-control" required></textarea>
+        <div class="invalid-feedback">Debe ingresar una descripción.</div>
     </div>
 
     <button type="submit" class="btn btn-success">Añadir Animal</button>
 </form>
 
 <a href="/gestionAnimals" class="btn btn-secondary mt-3">Volver</a>
+
+<!-- Script de validación -->
+<script src="/js/insertarAnimal.js" defer></script>
+
 {% endblock %}

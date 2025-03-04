@@ -50,7 +50,8 @@ class AnimalController {
     
         $categories = $this->categoryModel->getAll();
         echo $this->twig->render('crearAnimal.html.twig', [
-            'categories' => $categories
+            'categories' => $categories,
+            'user_id' => $_COOKIE['user_id']
         ]);
     }
     
@@ -220,6 +221,39 @@ class AnimalController {
             'user_id' => $user_id
         ]);
     }
+
+    public function apiListByCategory($idcategoria) {
+        header('Content-Type: application/json');
+    
+        $page = $_GET['page'] ?? 1;
+        $limit = 5;
+        $offset = ($page - 1) * $limit;
+    
+        $animales = $this->animalModel->getByCategoryPaginated($idcategoria, $limit, $offset);
+        $totalAnimales = $this->animalModel->countByCategory($idcategoria);
+        $totalPages = ceil($totalAnimales / $limit);
+    
+        echo json_encode([
+            'animales' => $animales,
+            'totalPages' => $totalPages
+        ]);
+        exit();
+    }
+
+    public function verificarNombre() {
+        $nombre = $_GET['nombre'] ?? '';
+        $existe = $this->animalModel->existeNombre($nombre);
+        echo json_encode(["exists" => $existe]);
+    }
+    
+    public function verificarNombreCientifico() {
+        $nombrecientifico = $_GET['nombrecientifico'] ?? '';
+        $existe = $this->animalModel->existeNombreCientifico($nombrecientifico);
+        echo json_encode(["exists" => $existe]);
+    }
+    
+    
+    
     
 
 }

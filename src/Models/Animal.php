@@ -124,6 +124,21 @@ class Animal {
         $stmt->execute(['idanimal' => $idanimal]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function existeNombre($nombre) {
+        $stmt = $this->db->prepare("SELECT COUNT(*) FROM animales WHERE nombrecomun = :nombre");
+        $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchColumn() > 0;
+    }
+    
+    public function existeNombreCientifico($nombrecientifico) {
+        $stmt = $this->db->prepare("SELECT COUNT(*) FROM animales WHERE nombrecientifico = :nombrecientifico");
+        $stmt->bindParam(':nombrecientifico', $nombrecientifico, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchColumn() > 0;
+    }
+    
     
     
     

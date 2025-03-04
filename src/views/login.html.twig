@@ -9,7 +9,7 @@
             <div class="card shadow-lg p-4">
                 <h2 class="text-center mb-4">Iniciar Sesión</h2>
 
-                <form id="loginForm" method="POST" action="/loginPost" novalidate>
+                <form id="loginForm" class="needs-validation" method="POST" action="/loginPost" novalidate>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email:</label>
                         <input type="email" class="form-control" id="email" name="email" required>
@@ -19,14 +19,16 @@
                     <div class="mb-3">
                         <label for="password" class="form-label">Contraseña:</label>
                         <input type="password" class="form-control" id="password" name="password" required>
-                        <div class="invalid-feedback">La contraseña no puede estar vacía.</div>
+                        <div class="invalid-feedback">Introduce tu contraseña.</div>
                     </div>
 
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
                     </div>
                 </form>
-
+                {% if error %}
+                    <p class="text-danger">{{ error }}</p>
+                {% endif %}
                 <div class="text-center mt-3">
                     <a href="/register">¿No tienes cuenta? Regístrate</a>
                 </div>
@@ -34,6 +36,8 @@
         </div>
     </div>
 </div>
+<script src="/js/login.js" defer></script>
+
 
 
 {% endblock %}

@@ -34,6 +34,17 @@ class Router{
         $this->routes['/editarAnimal/{id}'] = ['controller' => 'AnimalController', 'action' => 'editar'];
         $this->routes['/editarAnimalPost/{id}'] = ['controller' => 'AnimalController', 'action' => 'actualizar'];
         $this->routes['/deleteAnimal/{id}'] = ['controller' => 'AnimalController', 'action' => 'eliminar'];
+        $this->routes['/api/categoria/{id}'] = ['controller' => 'AnimalController', 'action' => 'apiListByCategory'];
+        $this->routes['/api/validarEmail'] = ['controller' => 'AuthController', 'action' => 'validarEmail'];
+        $this->routes['/api/categorias/add'] = ['controller' => 'CategoriaController', 'action' => 'addAjax'];
+        $this->routes['/api/categorias'] = ['controller' => 'CategoriaController', 'action' => 'listAjax'];
+        $this->routes['/api/categorias/list'] = ['controller' => 'CategoriaController', 'action' => 'listAjax'];
+        $this->routes['/animales/verificar-nombre'] = ['controller' => 'AnimalController', 'action' => 'verificarNombre'];
+        $this->routes['/animales/verificar-nombrecientifico'] = ['controller' => 'AnimalController', 'action' => 'verificarNombreCientifico'];
+        $this->routes['/categorias/verificar-nombre'] = ['controller' => 'CategoriaController', 'action' => 'verificarNombre'];
+
+
+
     }
 
     public function handleRequest()

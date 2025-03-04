@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", function (event) {
         let isValid = true;
 
-        // Capturar valores y limpiar espacios
         const nombreInput = document.getElementById("nombre");
         const emailInput = document.getElementById("email");
         const telefonoInput = document.getElementById("telef");
@@ -28,7 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Password:", password);
         console.log("Confirm Password:", confirmPassword);
 
-        // Validar que los campos no estén vacíos
         if (nombre === "") {
             nombreInput.classList.add("is-invalid");
             isValid = false;
@@ -45,7 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
             emailInput.classList.add("is-valid");
         }
 
-        // Validar Teléfono (Debe empezar con 6 y tener 9 dígitos)
         if (!/^6\d{8}$/.test(telefono)) {
             telefonoInput.classList.add("is-invalid");
             isValid = false;
@@ -54,7 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
             telefonoInput.classList.add("is-valid");
         }
 
-        // Validar Dirección (No vacía y con caracteres válidos)
         if (direccion === "" || !/^[a-zA-Z0-9\s,.#-]+$/.test(direccion)) {
             direccionInput.classList.add("is-invalid");
             isValid = false;
@@ -63,7 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
             direccionInput.classList.add("is-valid");
         }
 
-        // Validar Contraseña (Debe tener al menos 8 caracteres, 1 mayúscula, 1 minúscula y 1 número)
         if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}/.test(password)) {
             passwordInput.classList.add("is-invalid");
             isValid = false;
@@ -72,7 +67,6 @@ document.addEventListener("DOMContentLoaded", () => {
             passwordInput.classList.add("is-valid");
         }
 
-        // Validar Confirmación de Contraseña
         if (password !== confirmPassword || confirmPassword === "") {
             confirmPasswordInput.classList.add("is-invalid");
             isValid = false;
@@ -81,7 +75,6 @@ document.addEventListener("DOMContentLoaded", () => {
             confirmPasswordInput.classList.add("is-valid");
         }
 
-        // Si hay errores, detener el envío del formulario
         if (!isValid) {
             console.log("⚠️ Hay errores en el formulario, no se enviará.");
             event.preventDefault();

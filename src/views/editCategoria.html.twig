@@ -4,20 +4,21 @@
 <h2>Modificar Categoría</h2>
 
 {% if error %}
-    <p style="color: red;">{{ error }}</p>
+    <div class="alert alert-danger">{{ error }}</div>
 {% endif %}
 {% if success %}
-    <p style="color: green;">{{ success }}</p>
+    <div class="alert alert-success">{{ success }}</div>
 {% endif %}
 
-<form action="/editCategoriaPost/{{ categoria.idcategoria }}" method="POST" enctype="multipart/form-data">
+<form id="editCategoriaForm" action="/editCategoriaPost/{{ categoria.idcategoria }}" method="POST" enctype="multipart/form-data">
     <div class="mb-3">
-        <label for="nombre">Nombre de la categoría:</label>
+        <label for="nombre" class="form-label">Nombre de la categoría:</label>
         <input type="text" name="nombre" id="nombre" class="form-control" value="{{ categoria.nombre }}" required>
+        <div class="invalid-feedback">El nombre debe tener entre 3 y 50 caracteres.</div>
     </div>
 
     <div class="mb-3">
-        <label>Imagen actual:</label><br>
+        <label class="form-label">Imagen actual:</label><br>
         {% if categoria.foto %}
             <img src="{{ categoria.foto }}" alt="{{ categoria.nombre }}" width="150">
         {% else %}
@@ -26,10 +27,14 @@
     </div>
 
     <div class="mb-3">
-        <label for="imagen">Selecciona una nueva imagen (opcional):</label>
+        <label for="foto" class="form-label">Selecciona una nueva imagen (opcional):</label>
         <input type="file" name="foto" id="foto" class="form-control">
+        <div class="invalid-feedback">Solo se permiten imágenes JPG o PNG de máximo 2MB.</div>
     </div>
 
     <button type="submit" class="btn btn-warning">Actualizar Categoría</button>
 </form>
+
+<script src="/js/editCategoria.js" defer></script
+
 {% endblock %}

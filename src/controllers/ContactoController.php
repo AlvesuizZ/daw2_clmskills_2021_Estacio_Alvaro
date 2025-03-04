@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\Contacto;
 use Twig\Environment;
 use Twig\Loader\FileSystemLoader;
+use App\Models\Category;
 
 class ContactoController {
     private $twig;
@@ -14,11 +15,14 @@ class ContactoController {
         $loader = new FilesystemLoader(__DIR__ . '/../views');
         $this->twig = new Environment($loader);
         $this->contactoModel = new Contacto();
+        $this->categoryModel = new Category();
     }
 
     public function index() {
+        $categories = $this->categoryModel->getAll();
         echo $this->twig->render('contacto.html.twig', [
-            'user_id' => $_COOKIE['user_id']
+            'user_id' => $_COOKIE['user_id'],
+            'categories' => $categories
         ]);
     }
 
@@ -42,10 +46,11 @@ class ContactoController {
                 $registrado = isset($_COOKIE['user_id']) ? 1 : 0;
     
                 $this->contactoModel->insert($nombre, $email, $comentario, $registrado);
-    
+                $categories = $this->categoryModel->getAll();
                 echo $this->twig->render('contacto.html.twig', [
                     'success' => "Mensaje enviado correctamente.",
-                    'user_id' => $_COOKIE['user_id']
+                    'user_id' => $_COOKIE['user_id'],
+                    'categories' => $categories
                 ]);
                 return;
             }
