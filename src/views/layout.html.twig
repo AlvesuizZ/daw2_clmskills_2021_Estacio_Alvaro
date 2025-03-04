@@ -30,6 +30,12 @@
                             {% endif %}
                         </ul>
                     </li>
+                    <!-- Nuevo enlace de contacto -->
+                    <li class="nav-item"><a class="nav-link" href="/contacto">Contacto</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/quienesSomos">Quiénes Somos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/privacidad">Privacidad</a></li>
+
+
                 </ul>
 
                 <!-- Sección de autenticación -->
@@ -37,7 +43,7 @@
                     {% if user_id %}
                         {% if user_id == 3 %}
                             <li class="nav-item">
-                                <a class="btn btn-success me-2" href="/admin/gestionanimal">Gestionar Animales</a>
+                                <a class="btn btn-success me-2" href="/gestionAnimals">Gestionar Animales</a>
                             </li>
                             <li class="nav-item">
                                 <a class="btn btn-success me-2" href="/categorias">Gestionar Categorias</a>

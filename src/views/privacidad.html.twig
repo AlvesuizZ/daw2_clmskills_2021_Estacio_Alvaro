@@ -1,0 +1,45 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+<h2 class="text-center mb-4">Política de Privacidad</h2>
+
+<!-- Botón para abrir el modal -->
+<div class="text-center">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPrivacidad">
+        Ver Política de Privacidad
+    </button>
+</div>
+
+<!-- Modal de Bootstrap -->
+<div class="modal fade" id="modalPrivacidad" tabindex="-1" aria-labelledby="modalPrivacidadLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalPrivacidadLabel">Política de Privacidad</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    En nuestro sitio web nos preocupamos por la seguridad y privacidad de nuestros usuarios. Toda la información recopilada se maneja conforme a las regulaciones de protección de datos.
+                </p>
+                <h6>Información Recopilada</h6>
+                <p>
+                    Al registrarse, se recopilan datos como nombre, correo electrónico y teléfono. Estos datos no serán compartidos con terceros sin su consentimiento.
+                </p>
+                <h6>Uso de la Información</h6>
+                <p>
+                    La información se utiliza únicamente para mejorar la experiencia del usuario en el sitio y para contacto si es necesario.
+                </p>
+                <h6>Derechos del Usuario</h6>
+                <p>
+                    Puede solicitar la eliminación de sus datos en cualquier momento contactando con el administrador del sitio.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

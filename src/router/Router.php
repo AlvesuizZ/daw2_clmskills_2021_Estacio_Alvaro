@@ -17,6 +17,10 @@ class Router{
         $this->routes['/register'] = ['controller' => 'AuthController', 'action' => 'showRegister'];
         $this->routes['/registerPost'] = ['controller' => 'AuthController', 'action' => 'register'];
         $this->routes['/logout'] = ['controller' => 'AuthController', 'action' => 'logout'];
+        $this->routes['/contacto'] = ['controller' => 'ContactoController', 'action' => 'index'];
+        $this->routes['/contactoPost'] = ['controller' => 'ContactoController', 'action' => 'enviar'];
+        $this->routes['/quienesSomos'] = ['controller' => 'QuienesSomosController', 'action' => 'index'];
+        $this->routes['/privacidad'] = ['controller' => 'PrivacidadController', 'action' => 'index'];
         $this->routes['/category/{id}'] = ['controller' => 'AnimalController', 'action' => 'showByCategory'];
         $this->routes['/categorias'] = ['controller' => 'CategoriaController', 'action' => 'index'];
         $this->routes['/createCategoria'] = ['controller' => 'CategoriaController', 'action' => 'create'];
@@ -24,6 +28,12 @@ class Router{
         $this->routes['/categoriaDelete/{id}'] = ['controller' => 'CategoriaController', 'action' => 'delete'];
         $this->routes['/editCategoria/{id}'] = ['controller' => 'CategoriaController', 'action' => 'edit'];
         $this->routes['/editCategoriaPost/{id}'] = ['controller' => 'CategoriaController', 'action' => 'update'];
+        $this->routes['/gestionAnimals'] = ['controller' => 'AnimalController', 'action' => 'index'];
+        $this->routes['/crearAnimal'] = ['controller' => 'AnimalController', 'action' => 'nuevo'];
+        $this->routes['/crearAnimalPost'] = ['controller' => 'AnimalController', 'action' => 'guardar'];
+        $this->routes['/editarAnimal/{id}'] = ['controller' => 'AnimalController', 'action' => 'editar'];
+        $this->routes['/editarAnimalPost/{id}'] = ['controller' => 'AnimalController', 'action' => 'actualizar'];
+        $this->routes['/deleteAnimal/{id}'] = ['controller' => 'AnimalController', 'action' => 'eliminar'];
     }
 
     public function handleRequest()

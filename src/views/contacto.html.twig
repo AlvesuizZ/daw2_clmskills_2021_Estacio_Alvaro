@@ -1,0 +1,31 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+<h2>Contacto</h2>
+
+{% if error %}
+    <p style="color: red;">{{ error }}</p>
+{% endif %}
+{% if success %}
+    <p style="color: green;">{{ success }}</p>
+{% endif %}
+
+<form action="/contactoPost" method="POST">
+    <div class="mb-3">
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" id="nombre" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="email">Correo Electrónico:</label>
+        <input type="email" name="email" id="email" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="mensaje">Mensaje:</label>
+        <textarea name="comentario" id="comentario" class="form-control" required minlength="10"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enviar</button>
+</form>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+<h2>Modificar Animal</h2>
+
+{% if error %}
+    <p style="color: red;">{{ error }}</p>
+{% endif %}
+{% if success %}
+    <p style="color: green;">{{ success }}</p>
+{% endif %}
+
+<form action="/editarAnimalPost/{{ animal.idanimal }}" method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="nombrecomun">Nombre Común:</label>
+        <input type="text" name="nombrecomun" id="nombrecomun" class="form-control" value="{{ animal.nombrecomun }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="nombrecientifico">Nombre Científico:</label>
+        <input type="text" name="nombrecientifico" id="nombrecientifico" class="form-control" value="{{ animal.nombrecientifico }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="idcategoria">Categoría:</label>
+        <select name="idcategoria" id="idcategoria" class="form-select" required>
+            {% for categoria in categories %}
+                <option value="{{ categoria.idcategoria }}" {% if categoria.idcategoria == animal.idcategoria %}selected{% endif %}>
+                    {{ categoria.nombre }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>Imagen Actual:</label><br>
+        {% if animal.foto %}
+            <img src="{{ animal.foto }}" width="150">
+        {% else %}
+            <p>No hay imagen</p>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label for="foto">Nueva Imagen (opcional):</label>
+        <input type="file" name="foto" id="foto" class="form-control" accept="image/*">
+    </div>
+
+    <div class="mb-3">
+        <label for="resumen">Descripción / Resumen:</label>
+        <textarea name="resumen" id="resumen" class="form-control" required>{{ animal.resumen }}</textarea>
+    </div>
+
+    <button type="submit" class="btn btn-warning">Actualizar Animal</button>
+</form>
+
+<a href="/gestionAnimals" class="btn btn-secondary mt-3">Volver</a>
+{% endblock %}

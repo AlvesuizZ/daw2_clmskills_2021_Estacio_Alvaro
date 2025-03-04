@@ -1,0 +1,48 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+<h2>Añadir Nuevo Animal</h2>
+
+{% if error %}
+    <p style="color: red;">{{ error }}</p>
+{% endif %}
+{% if success %}
+    <p style="color: green;">{{ success }}</p>
+{% endif %}
+
+<form action="/crearAnimalPost" method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="nombrecomun">Nombre Común:</label>
+        <input type="text" name="nombrecomun" id="nombrecomun" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="nombrecientifico">Nombre Científico:</label>
+        <input type="text" name="nombrecientifico" id="nombrecientifico" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="idcategoria">Categoría:</label>
+        <select name="idcategoria" id="idcategoria" class="form-select" required>
+            <option value="">Seleccione una categoría</option>
+            {% for categoria in categories %}
+                <option value="{{ categoria.idcategoria }}">{{ categoria.nombre }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="foto">Imagen:</label>
+        <input type="file" name="foto" id="foto" class="form-control" accept="image/*" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="resumen">Descripción / Resumen:</label>
+        <textarea name="resumen" id="resumen" class="form-control" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-success">Añadir Animal</button>
+</form>
+
+<a href="/gestionAnimals" class="btn btn-secondary mt-3">Volver</a>
+{% endblock %}

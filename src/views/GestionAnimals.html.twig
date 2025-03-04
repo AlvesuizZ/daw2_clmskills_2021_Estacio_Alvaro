@@ -1,0 +1,65 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+<h2>GESTIÓN DE ANIMALES</h2>
+
+<!-- Tabla de animales -->
+<table class="table mt-4">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Nombre Científico</th>
+            <th>Imagen</th>
+            <th>Usuario</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for animal in animals %}
+        <tr>
+            <td>{{ animal.idanimal }}</td>
+            <td>{{ animal.nombrecomun }}</a></td>
+            <td>{{ animal.nombrecientifico }}</td>
+            <td>
+                {% if animal.foto %}
+                    <img src="{{ animal.foto }}" width="100">
+                {% else %}
+                    <p>No imagen</p>
+                {% endif %}
+            </td>
+            <td>{{ animal.usuario }}</td>
+            <td>
+                {% if animal.codusuario == user_id %}
+                    <a href="/editarAnimal/{{ animal.idanimal }}" class="btn btn-warning">Modificar</a>
+                    <a href="/deleteAnimal/{{ animal.idanimal }}" class="btn btn-danger">Borrar</a>
+                {% else %}
+                    <button class="btn btn-secondary" disabled>No permitido</button>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Paginación -->
+<nav>
+    <ul class="pagination">
+        {% if currentPage > 1 %}
+            <li class="page-item"><a class="page-link" href="?page={{ currentPage - 1 }}">Anterior</a></li>
+        {% endif %}
+
+        {% for i in 1..totalPages %}
+            <li class="page-item {% if i == currentPage %}active{% endif %}">
+                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+            </li>
+        {% endfor %}
+
+        {% if currentPage < totalPages %}
+            <li class="page-item"><a class="page-link" href="?page={{ currentPage + 1 }}">Siguiente</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+<a href="/crearAnimal" class="btn btn-success mt-3">Añadir Animal</a>
+{% endblock %}
