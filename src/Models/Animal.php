@@ -31,8 +31,8 @@ class Animal {
         try {
             $stmt = $this->db->prepare("DELETE FROM animales WHERE idanimal = ?");
             return $stmt->execute([$id]);
-        } catch (PDOException $e) {
-            throw new Exception("Error al eliminar el animal: " . $e->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception("Error al eliminar el animal: " . $e->getMessage());
         }
     }
     
@@ -45,8 +45,8 @@ class Animal {
                 VALUES (?, ?, ?, ?, ?, ?)
             ");
             return $stmt->execute([$nombrecomun, $nombrecientifico, $idcategoria, $foto, $resumen, $codusuario]);
-        } catch (PDOException $e) {
-            throw new Exception("Error al insertar el animal: " . $e->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception("Error al insertar el animal: " . $e->getMessage());
         }
     }
 
@@ -58,8 +58,8 @@ class Animal {
                 WHERE idanimal = ?
             ");
             return $stmt->execute([$nombrecomun, $nombrecientifico, $idcategoria, $foto, $resumen, $id]);
-        } catch (PDOException $e) {
-            throw new Exception("Error al actualizar el animal: " . $e->getMessage());
+        } catch (\PDOException $e) {
+            throw new \Exception("Error al actualizar el animal: " . $e->getMessage());
         }
     }
     
