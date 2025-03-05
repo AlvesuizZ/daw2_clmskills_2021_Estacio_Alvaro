@@ -11,6 +11,8 @@ use App\Models\Category;
 class CategoriaController{
 
     private PDO $db;
+    private $categoryModel;
+    private $twig;
 
     public function __construct() {
         $loader = new FilesystemLoader(__DIR__ . '/../views');
@@ -96,7 +98,7 @@ class CategoriaController{
             $this->categoryModel->delete($id);
 
             echo json_encode(["success" => true, "message" => "Categoría eliminada correctamente."]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo json_encode(["success" => false, "message" => "Error al eliminar la categoría."]);
         }
     }
@@ -150,7 +152,7 @@ class CategoriaController{
     
             echo json_encode($categorias);
             exit();
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             error_log("Error en consulta SQL: " . $e->getMessage());
             echo json_encode(["error" => "Error en la consulta SQL"]);
             exit();

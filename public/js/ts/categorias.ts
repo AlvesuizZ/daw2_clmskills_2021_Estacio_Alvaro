@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     if (data.success) {
                         alert("Categoría eliminada correctamente.");
-                        button.closest(".col-md-4")?.remove(); // ⬅️ Elimina la tarjeta de la categoría
+                        button.closest(".col-md-4")?.remove(); 
                     } else {
                         alert("Error al eliminar la categoría.");
                     }

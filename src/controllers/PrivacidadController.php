@@ -8,6 +8,7 @@ use App\Models\Category;
 
 class PrivacidadController {
     private $twig;
+    private $categoryModel;
 
     public function __construct() {
         $loader = new FilesystemLoader(__DIR__ . '/../views');

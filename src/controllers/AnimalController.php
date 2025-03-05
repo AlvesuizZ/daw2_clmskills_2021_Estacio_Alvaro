@@ -71,7 +71,7 @@ class AnimalController {
                 $codusuario = $_COOKIE['user_id'];
     
                 if (empty($nombrecomun) || empty($nombrecientifico) || empty($idcategoria) || empty($resumen) || empty($_FILES['foto']['tmp_name'])) {
-                    throw new Exception("Todos los campos son obligatorios.");
+                    throw new \Exception("Todos los campos son obligatorios.");
                 }
     
                 $foto = file_get_contents($_FILES['foto']['tmp_name']);
@@ -82,7 +82,7 @@ class AnimalController {
                 header("Location: /gestionAnimals");
                 exit();
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $_SESSION['error'] = $e->getMessage();
             header("Location: /crearAnimal");
             exit();
@@ -131,11 +131,11 @@ class AnimalController {
                 $animal = $this->animalModel->find($id);
     
                 if (!$animal || $animal['codusuario'] != $codusuario) {
-                    throw new Exception("No tienes permiso para modificar este animal.");
+                    throw new \Exception("No tienes permiso para modificar este animal.");
                 }
     
                 if (empty($nombrecomun) || empty($nombrecientifico) || empty($idcategoria) || empty($resumen)) {
-                    throw new Exception("Todos los campos son obligatorios.");
+                    throw new \Exception("Todos los campos son obligatorios.");
                 }
     
                 
@@ -149,7 +149,7 @@ class AnimalController {
                 header("Location: /gestionAnimals");
                 exit();
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $_SESSION['error'] = $e->getMessage();
             header("Location: /admin/animales/editar/$id");
             exit();
@@ -167,11 +167,11 @@ class AnimalController {
             $animal = $this->animalModel->find($id);
     
             if (!$animal) {
-                throw new Exception("El animal no existe.");
+                throw new \Exception("El animal no existe.");
             }
     
             if ($animal['codusuario'] != $_COOKIE['user_id']) {
-                throw new Exception("No tienes permiso para eliminar este animal.");
+                throw new \Exception("No tienes permiso para eliminar este animal.");
             }
     
             $this->animalModel->delete($id);
@@ -179,7 +179,7 @@ class AnimalController {
             $_SESSION['success'] = "Animal eliminado correctamente.";
             header("Location: /gestionAnimals");
             exit();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $_SESSION['error'] = $e->getMessage();
             header("Location: /gestionAnimals");
             exit();
