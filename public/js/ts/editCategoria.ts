@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let nombreValido = false;
 
-    // 🚀 Validación asíncrona para verificar si el nombre ya existe
+    //  Validación asíncrona para verificar si el nombre ya existe
     async function validarNombreCategoria(nombre: string): Promise<boolean> {
         const response = await fetch(`/categorias/verificar-nombre?nombre=${nombre}`);
         const data = await response.json();
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
             nombreInput.classList.remove("is-invalid");
         }
 
-        // 🚀 **Revalidar nombre único antes de enviar**
+        //  **Revalidar nombre único antes de enviar**
         if (!nombreValido) {
             nombreInput.classList.add("is-invalid");
             valid = false;
