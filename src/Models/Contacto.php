@@ -19,7 +19,7 @@ class Contacto {
                 VALUES (?, ?, ?, ?)
             ");
             return $stmt->execute([$nombre, $email, $mensaje, $registrado]);
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             throw new \Exception("Error al guardar el mensaje: " . $e->getMessage());
         }
     }

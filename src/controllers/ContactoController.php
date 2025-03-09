@@ -10,6 +10,7 @@ use App\Models\Category;
 class ContactoController {
     private $twig;
     private $contactoModel;
+    private $categoryModel;
 
     public function __construct() {
         $loader = new FilesystemLoader(__DIR__ . '/../views');
