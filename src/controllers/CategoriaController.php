@@ -126,7 +126,6 @@ class CategoriaController{
     public function listAjax() {
         header('Content-Type: application/json');
     
-        // Verificar si la conexión a la base de datos existe
         if (!$this->db) {
             error_log("Error: No hay conexión a la base de datos");
             echo json_encode(["error" => "No hay conexión a la base de datos"]);
@@ -137,7 +136,6 @@ class CategoriaController{
             $stmt = $this->db->query("SELECT idcategoria, nombre, foto FROM categorias ORDER BY nombre ASC");
             $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-            // Depurar si la consulta devuelve resultados
             if (!$categorias) {
                 error_log("Error: No hay categorías en la base de datos");
                 echo json_encode(["error" => "No hay categorías disponibles"]);
@@ -145,7 +143,7 @@ class CategoriaController{
             }
     
             foreach ($categorias as &$categoria) {
-                $categoria['foto'] = base64_encode($categoria['foto']); // Convertir imagen a Base64
+                $categoria['foto'] = base64_encode($categoria['foto']);
             }
     
             echo json_encode($categorias);

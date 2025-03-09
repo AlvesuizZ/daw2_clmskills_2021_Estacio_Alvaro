@@ -35,6 +35,79 @@
         <div class="invalid-feedback">Debe seleccionar una categoría.</div>
     </div>
 
+    <!-- Campos adicionales de la tabla taxonomias -->
+<div class="mb-3">
+    <label for="renio">Reino:</label>
+    <input type="text" name="renio" id="renio" class="form-control" value="{{ taxonomia.reino }}">
+</div>
+
+<div class="mb-3">
+    <label for="clase">Clase:</label>
+    <input type="text" name="clase" id="clase" class="form-control" value="{{ taxonomia.clase }}">
+</div>
+
+<div class="mb-3">
+    <label for="orden">Orden:</label>
+    <input type="text" name="orden" id="orden" class="form-control" value="{{ taxonomia.orden }}">
+</div>
+
+<div class="mb-3">
+    <label for="familia">Familia:</label>
+    <input type="text" name="familia" id="familia" class="form-control" value="{{ taxonomia.familia }}">
+</div>
+
+<div class="mb-3">
+    <label for="genero">Género:</label>
+    <input type="text" name="genero" id="genero" class="form-control" value="{{ taxonomia.genero }}">
+</div>
+
+<div class="mb-3">
+    <label for="especie">Especie:</label>
+    <input type="text" name="especie" id="especie" class="form-control" value="{{ taxonomia.especie }}">
+</div>
+
+<!-- Campos adicionales de la tabla descripcionestenemos -->
+<div class="mb-3">
+    <label for="titulo1">Título 1:</label>
+    <input type="text" name="titulo1" id="titulo1" class="form-control" value="{{ descripciones.titulo1 }}">
+</div>
+
+<div class="mb-3">
+    <label for="descripcion1">Descripción 1:</label>
+    <textarea name="descripcion1" id="descripcion1" class="form-control">{{ descripciones.descripcion1 }}</textarea>
+</div>
+
+<div class="mb-3">
+    <label for="titulo2">Título 2:</label>
+    <input type="text" name="titulo2" id="titulo2" class="form-control" value="{{ descripciones.titulo2 }}">
+</div>
+
+<div class="mb-3">
+    <label for="descripcion2">Descripción 2:</label>
+    <textarea name="descripcion2" id="descripcion2" class="form-control">{{ descripciones.descripcion2 }}</textarea>
+</div>
+
+<div class="mb-3">
+    <label for="titulo3">Título 3:</label>
+    <input type="text" name="titulo3" id="titulo3" class="form-control" value="{{ descripciones.titulo3 }}">
+</div>
+
+<div class="mb-3">
+    <label for="descripcion3">Descripción 3:</label>
+    <textarea name="descripcion3" id="descripcion3" class="form-control">{{ descripciones.descripcion3 }}</textarea>
+</div>
+
+<div class="mb-3">
+    <label for="titulo4">Título 4:</label>
+    <input type="text" name="titulo4" id="titulo4" class="form-control" value="{{ descripciones.titulo4 }}">
+</div>
+
+<div class="mb-3">
+    <label for="descripcion4">Descripción 4:</label>
+    <textarea name="descripcion4" id="descripcion4" class="form-control">{{ descripciones.descripcion4 }}</textarea>
+</div>
+
+
     <div class="mb-3">
         <label>Imagen Actual:</label><br>
         {% if animal.foto %}

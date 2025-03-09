@@ -19,9 +19,18 @@ class HomeController {
 
     public function index() {
         session_start();
-
+    
         $user_id = $_COOKIE['user_id'] ?? null;
+
         $categories = $this->categoryModel->getAll();
+
+        foreach ($categories as &$category) {
+            if ($category['foto']) {
+                $category['foto_base64'] = 'data:image/jpeg;base64,' . base64_encode($category['foto']);
+            }
+        }
+
         echo $this->twig->render('home.html.twig', ['user_id' => $user_id, 'categories' => $categories]);
     }
+    
 }

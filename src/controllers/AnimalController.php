@@ -5,11 +5,13 @@ use Twig\Environment;
 use Twig\Loader\FileSystemLoader;
 use App\Models\Animal;
 use App\Models\Category;
+use App\Models\Database;
 
 class AnimalController {
     private $twig;
     private $animalModel;
     private $categoryModel;
+    private $db;
 
     public function __construct() {
         $loader = new FilesystemLoader(__DIR__ . '/../views');
@@ -61,54 +63,90 @@ class AnimalController {
             header("Location: /login");
             exit();
         }
-    
-        try {
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $nombrecomun = trim($_POST['nombrecomun']);
-                $nombrecientifico = trim($_POST['nombrecientifico']);
-                $idcategoria = $_POST['idcategoria'] ?? null;
-                $resumen = trim($_POST['resumen']);
-                $codusuario = $_COOKIE['user_id'];
-    
-                if (empty($nombrecomun) || empty($nombrecientifico) || empty($idcategoria) || empty($resumen) || empty($_FILES['foto']['tmp_name'])) {
-                    throw new Exception("Todos los campos son obligatorios.");
+            try {
+                $db = Database::getInstance()->getConnection();
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {       
+
+                    $nombrecomun = $_POST['nombrecomun'];
+                    $nombrecientifico = $_POST['nombrecientifico'];
+                    $idcategoria = $_POST['idcategoria'];
+                    $codusuario = $_COOKIE['user_id'];
+        
+
+                    $foto = null;
+                    if (!empty($_FILES['foto']['tmp_name'])) {
+                        $foto = file_get_contents($_FILES['foto']['tmp_name']);
+                    }
+        
+
+                    $stmt = $db->prepare("INSERT INTO animales (nombrecomun, nombrecientifico, idcategoria, foto, codusuario) 
+                                        VALUES (?, ?, ?, ?, ?)");
+                    $stmt->execute([$nombrecomun, $nombrecientifico, $idcategoria, $foto, $codusuario]);
+
+        
+
+                    $idanimal = $db->lastInsertId();
+        
+
+                    $stmt = $db->prepare("INSERT INTO taxonomias (idanimal, reino, filo, clase, orden, familia, genero, especie) 
+                                          VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                    $stmt->execute([
+                        $idanimal,
+                        $_POST['reino'], $_POST['filo'], $_POST['clase'],
+                        $_POST['orden'], $_POST['familia'], $_POST['genero'], $_POST['especie']
+                    ]);
+        
+
+                    $stmt = $db->prepare("INSERT INTO descripciones (idanimal, titulo1, descripcion1, titulo2, descripcion2, titulo3, descripcion3, titulo4, descripcion4) 
+                                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $stmt->execute([
+                        $idanimal,
+                        $_POST['titulo1'], $_POST['descripcion1'],
+                        $_POST['titulo2'], $_POST['descripcion2'],
+                        $_POST['titulo3'], $_POST['descripcion3'],
+                        $_POST['titulo4'], $_POST['descripcion4']
+                    ]);
+        
+
+                    header("Location: /gestionAnimals?success=Animal agregado correctamente");
+                    exit;
                 }
+            } catch (Exception $e) {
+                die("Error al insertar el animal: " . $e->getMessage());
+            }
+        }
+        
     
-                $foto = file_get_contents($_FILES['foto']['tmp_name']);
     
-                $this->animalModel->insert($nombrecomun, $nombrecientifico, $idcategoria, $foto, $resumen, $codusuario);
-    
-                $_SESSION['success'] = "Animal añadido correctamente.";
+
+        public function editar($id) {
+            session_start();
+            if (!isset($_COOKIE['user_id'])) {
+                header("Location: /login");
+                exit();
+            }
+
+            $animal = $this->animalModel->find($id);
+
+            $categories = $this->categoryModel->getAll();
+
+            if (!$animal || $animal['codusuario'] != $_COOKIE['user_id']) {
+                $_SESSION['error'] = "No tienes permiso para modificar este animal.";
                 header("Location: /gestionAnimals");
                 exit();
             }
-        } catch (Exception $e) {
-            $_SESSION['error'] = $e->getMessage();
-            header("Location: /crearAnimal");
-            exit();
-        }
-    }
-    
 
-    public function editar($id) {
-        session_start();
-        if (!isset($_COOKIE['user_id'])) {
-            header("Location: /login");
-            exit();
-        }
-    
-        $animal = $this->animalModel->find($id);
-        $categories = $this->categoryModel->getAll();
-    
-        if (!$animal || $animal['codusuario'] != $_COOKIE['user_id']) {
-            $_SESSION['error'] = "No tienes permiso para modificar este animal.";
-            header("Location: /gestionAnimals");
-            exit();
-        }
+            $taxonomia = $this->animalModel->getTaxonomy($id);
+
+            $descripciones = $this->animalModel->getDescription($id);
+        
+        
     
         echo $this->twig->render('editarAnimal.html.twig', [
             'animal' => $animal,
             'categories' => $categories,
+            'taxonomia' => $taxonomia,
+            'descripciones' => $descripciones,
             'user_id' => $_COOKIE['user_id']
         ]);
     }
@@ -126,24 +164,43 @@ class AnimalController {
                 $nombrecientifico = trim($_POST['nombrecientifico']);
                 $idcategoria = $_POST['idcategoria'] ?? null;
                 $resumen = trim($_POST['resumen']);
-                $codusuario = $_COOKIE['user_id']; // Usuario actual
+                $codusuario = $_COOKIE['user_id']; 
+
+                $renio = $_POST['renio'];
+                $clase = $_POST['clase'];
+                $orden = $_POST['orden'];
+                $familia = $_POST['familia'];
+                $genero = $_POST['genero'];
+                $especie = $_POST['especie'];
+
+                $titulo1 = $_POST['titulo1'];
+                $descripcion1 = $_POST['descripcion1'];
+                $titulo2 = $_POST['titulo2'];
+                $descripcion2 = $_POST['descripcion2'];
+                $titulo3 = $_POST['titulo3'];
+                $descripcion3 = $_POST['descripcion3'];
+                $titulo4 = $_POST['titulo4'];
+                $descripcion4 = $_POST['descripcion4'];
     
                 $animal = $this->animalModel->find($id);
-    
                 if (!$animal || $animal['codusuario'] != $codusuario) {
                     throw new Exception("No tienes permiso para modificar este animal.");
                 }
     
                 if (empty($nombrecomun) || empty($nombrecientifico) || empty($idcategoria) || empty($resumen)) {
-                    throw new Exception("Todos los campos son obligatorios.");
+                    throw new Exception("Todos los campos obligatorios deben ser completados.");
                 }
     
-                
+                // Manejo de la foto (si se sube una nueva foto, se procesa)
                 $foto = isset($_FILES['foto']) && $_FILES['foto']['error'] === 0 
                     ? file_get_contents($_FILES['foto']['tmp_name']) 
-                    : $animal['foto'];
-    
+                    : $animal['foto']; 
+ 
                 $this->animalModel->update($id, $nombrecomun, $nombrecientifico, $idcategoria, $foto, $resumen);
+    
+                $this->animalModel->updateTaxonomy($id, $renio, $clase, $orden, $familia, $genero, $especie);
+
+                $this->animalModel->updateDescriptions($id, $titulo1, $descripcion1, $titulo2, $descripcion2, $titulo3, $descripcion3, $titulo4, $descripcion4);
     
                 $_SESSION['success'] = "Animal actualizado correctamente.";
                 header("Location: /gestionAnimals");
@@ -155,6 +212,7 @@ class AnimalController {
             exit();
         }
     }
+    
 
     public function eliminar($id) {
         session_start();
@@ -201,13 +259,13 @@ class AnimalController {
             if (!empty($animal['foto'])) {
                 $animal['foto'] = 'data:image/jpeg;base64,' . base64_encode($animal['foto']);
             }
-        
+    
             if (isset($animal['idanimal'])) {
                 $animal['taxonomia'] = $this->animalModel->getTaxonomy($animal['idanimal']) ?? [];
-                error_log("Taxonomía de {$animal['nombrecomun']}: " . print_r($animal['taxonomia'], true));
+                $animal['descripcion'] = $this->animalModel->getDescription($animal['idanimal']) ?? [];
             }
         }
-
+    
         $categories = $this->categoryModel->getAll();
         $user_id = $_COOKIE['user_id'] ?? null;
     
@@ -221,6 +279,7 @@ class AnimalController {
             'user_id' => $user_id
         ]);
     }
+    
 
     public function apiListByCategory($idcategoria) {
         header('Content-Type: application/json');

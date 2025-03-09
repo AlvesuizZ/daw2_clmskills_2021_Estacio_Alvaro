@@ -125,6 +125,25 @@ class Animal {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function updateTaxonomy($id, $renio, $clase, $orden, $familia, $genero, $especie) {
+        $stmt = $this->db->prepare("
+            UPDATE taxonomias 
+            SET reino = :reino, clase = :clase, orden = :orden, 
+                familia = :familia, genero = :genero, especie = :especie
+            WHERE idanimal = :idanimal
+        ");
+        $stmt->execute([
+            'reino' => $renio,
+            'clase' => $clase,
+            'orden' => $orden,
+            'familia' => $familia,
+            'genero' => $genero,
+            'especie' => $especie,
+            'idanimal' => $id
+        ]);
+    }
+    
+
     public function existeNombre($nombre) {
         $stmt = $this->db->prepare("SELECT COUNT(*) FROM animales WHERE nombrecomun = :nombre");
         $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
@@ -138,6 +157,43 @@ class Animal {
         $stmt->execute();
         return $stmt->fetchColumn() > 0;
     }
+
+    public function getDescription($idanimal) {
+        $stmt = $this->db->prepare("
+            SELECT titulo1, descripcion1, 
+                   titulo2, descripcion2, 
+                   titulo3, descripcion3, 
+                   titulo4, descripcion4
+            FROM descripciones
+            WHERE idanimal = :idanimal
+        ");
+        $stmt->execute(['idanimal' => $idanimal]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updateDescriptions($id, $titulo1, $descripcion1, $titulo2, $descripcion2, $titulo3, $descripcion3, $titulo4, $descripcion4) {
+        $stmt = $this->db->prepare("
+            UPDATE descripciones 
+            SET titulo1 = :titulo1, descripcion1 = :descripcion1, 
+                titulo2 = :titulo2, descripcion2 = :descripcion2, 
+                titulo3 = :titulo3, descripcion3 = :descripcion3,
+                titulo4 = :titulo4, descripcion4 = :descripcion4
+            WHERE idanimal = :idanimal
+        ");
+        $stmt->execute([
+            'titulo1' => $titulo1,
+            'descripcion1' => $descripcion1,
+            'titulo2' => $titulo2,
+            'descripcion2' => $descripcion2,
+            'titulo3' => $titulo3,
+            'descripcion3' => $descripcion3,
+            'titulo4' => $titulo4,
+            'descripcion4' => $descripcion4,
+            'idanimal' => $id
+        ]);
+    }
+    
+    
     
     
     

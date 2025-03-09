@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let nombreValido = false;
     let nombreCientificoValido = false;
 
-    // 🚀 Función para validar nombres únicos de forma asíncrona
+    // Función para validar nombres únicos de forma asíncrona
     async function validarNombre(nombre: string, tipo: string): Promise<boolean> {
         const response = await fetch(`/animales/verificar-${tipo}?${tipo}=${nombre}`);
         const data = await response.json();
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (!valid) {
-            event.preventDefault(); // ⛔ Evita que el formulario se envíe si hay errores
+            event.preventDefault(); // Evita que el formulario se envíe si hay errores
         }
     });
 });

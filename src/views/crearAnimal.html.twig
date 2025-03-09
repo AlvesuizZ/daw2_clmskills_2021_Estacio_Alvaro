@@ -3,56 +3,96 @@
 {% block content %}
 <h2>Añadir Nuevo Animal</h2>
 
-<!-- Mensajes de error o éxito -->
 {% if error %}
-    <div class="alert alert-danger">{{ error }}</div>
+    <p style="color: red;">{{ error }}</p>
 {% endif %}
 {% if success %}
-    <div class="alert alert-success">{{ success }}</div>
+    <p style="color: green;">{{ success }}</p>
 {% endif %}
 
-<form id="insertAnimalForm" action="/crearAnimalPost" method="POST" enctype="multipart/form-data" novalidate>
+<form id="form-animal" action="/crearAnimalPost" method="POST" enctype="multipart/form-data">
+    <!-- Nombre Común -->
     <div class="mb-3">
-        <label for="nombrecomun" class="form-label">Nombre Común:</label>
+        <label for="nombrecomun">Nombre Común:</label>
         <input type="text" name="nombrecomun" id="nombrecomun" class="form-control" required>
-        <div class="invalid-feedback">El nombre común es obligatorio y debe ser único.</div>
     </div>
 
+    <!-- Nombre Cientifico -->
     <div class="mb-3">
-        <label for="nombrecientifico" class="form-label">Nombre Científico:</label>
+        <label for="nombrecientifico">Nombre Científico:</label>
         <input type="text" name="nombrecientifico" id="nombrecientifico" class="form-control" required>
-        <div class="invalid-feedback">El nombre científico es obligatorio y debe ser único.</div>
     </div>
 
+    <!-- Categoría -->
     <div class="mb-3">
-        <label for="idcategoria" class="form-label">Categoría:</label>
+        <label for="idcategoria">Categoría:</label>
         <select name="idcategoria" id="idcategoria" class="form-select" required>
             <option value="">Seleccione una categoría</option>
             {% for categoria in categories %}
                 <option value="{{ categoria.idcategoria }}">{{ categoria.nombre }}</option>
             {% endfor %}
         </select>
-        <div class="invalid-feedback">Debe seleccionar una categoría.</div>
     </div>
 
+    <!-- Imagen -->
     <div class="mb-3">
-        <label for="foto" class="form-label">Imagen:</label>
-        <input type="file" name="foto" id="foto" class="form-control" accept="image/jpeg, image/png" required>
-        <div class="invalid-feedback">Debe subir una imagen en formato JPG o PNG menor a 150 KB.</div>
+        <label for="foto">Imagen:</label>
+        <input type="file" name="foto" id="foto" class="form-control" accept="image/*" required>
     </div>
 
-    <div class="mb-3">
-        <label for="resumen" class="form-label">Descripción / Resumen:</label>
-        <textarea name="resumen" id="resumen" class="form-control" required></textarea>
-        <div class="invalid-feedback">Debe ingresar una descripción.</div>
-    </div>
+    <!-- Taxonomia -->
+    <fieldset class="border p-3">
+        <legend>Taxonomía</legend>
+        <div class="mb-3">
+            <label for="reino">Reino:</label>
+            <input type="text" name="reino" id="reino" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="filo">Filo:</label>
+            <input type="text" name="filo" id="filo" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="clase">Clase:</label>
+            <input type="text" name="clase" id="clase" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="orden">Orden:</label>
+            <input type="text" name="orden" id="orden" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="familia">Familia:</label>
+            <input type="text" name="familia" id="familia" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="genero">Género:</label>
+            <input type="text" name="genero" id="genero" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="especie">Especie:</label>
+            <input type="text" name="especie" id="especie" class="form-control" required>
+        </div>
+    </fieldset>
+
+    <!-- Descripciones -->
+    <fieldset class="border p-3 mt-3">
+        <legend>Descripciones</legend>
+        {% for i in 1..4 %}
+            <div class="mb-3">
+                <label for="titulo{{ i }}">Título {{ i }}:</label>
+                <input type="text" name="titulo{{ i }}" id="titulo{{ i }}" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="descripcion{{ i }}">Descripción {{ i }}:</label>
+                <textarea name="descripcion{{ i }}" id="descripcion{{ i }}" class="form-control"></textarea>
+            </div>
+        {% endfor %}
+    </fieldset>
 
     <button type="submit" class="btn btn-success">Añadir Animal</button>
 </form>
 
 <a href="/gestionAnimals" class="btn btn-secondary mt-3">Volver</a>
 
-<!-- Script de validación -->
 <script src="/js/insertarAnimal.js" defer></script>
 
 {% endblock %}

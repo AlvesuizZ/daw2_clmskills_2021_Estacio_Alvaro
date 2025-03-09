@@ -56,9 +56,9 @@ class Router{
         $parts = explode('/', trim($path, '/'));
         $paramValue = null;
     
-        // Verificar si el último segmento es un número (ID)
+
         if (is_numeric(end($parts))) {
-            $paramValue = array_pop($parts); // Extraer el ID
+            $paramValue = array_pop($parts); 
             $path = '/' . implode('/', $parts) . '/{id}'; // Convertir la ruta a formato dinámico
         }
     
@@ -76,9 +76,9 @@ class Router{
     
                 if ($paramValue !== null) {
                     error_log("Parámetro ID: " . $paramValue);
-                    $controller->$action($paramValue); // Pasar el ID al controlador
+                    $controller->$action($paramValue);
                 } else {
-                    $controller->$action(); // Sin ID
+                    $controller->$action(); 
                 }
             } else {
                 http_response_code(404);

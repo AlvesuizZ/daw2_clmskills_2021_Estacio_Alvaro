@@ -7,24 +7,31 @@
 
 
 <div class="d-flex flex-wrap justify-content-center">
-    {% for animal in animals %}
-        <img src="{{ animal.foto }}" 
-            alt="{{ animal.nombre }}" 
-            class="img-thumbnail m-2 animal-img" 
-            data-animal="{{ {
-                'idanimal': animal.idanimal,
-                'nombre': animal.nombrecomun,
-                'descripcion': animal.resumen,
-                'nombrecientifico': animal.nombrecientifico,
-                'reino': animal.taxonomia.reino,
-                'filo': animal.taxonomia.filo,
-                'clase': animal.taxonomia.clase,
-                'orden': animal.taxonomia.orden,
-                'familia': animal.taxonomia.familia,
-                'genero': animal.taxonomia.genero,
-                'especie': animal.taxonomia.especie
-            } | json_encode | e('html_attr') }}"
-            style="width: 100px; height: 100px; cursor: pointer;">
+   {% for animal in animals %}
+    <img src="{{ animal.foto }}" 
+        alt="{{ animal.nombrecomun }}" 
+        class="img-thumbnail m-2 animal-img" 
+        data-animal="{{ {
+            'idanimal': animal.idanimal,
+            'nombre': animal.nombrecomun,
+            'nombrecientifico': animal.nombrecientifico,
+            'reino': animal.taxonomia.reino,
+            'filo': animal.taxonomia.filo,
+            'clase': animal.taxonomia.clase,
+            'orden': animal.taxonomia.orden,
+            'familia': animal.taxonomia.familia,
+            'genero': animal.taxonomia.genero,
+            'especie': animal.taxonomia.especie,
+            'titulo1': animal.descripcion.titulo1,
+            'descripcion1': animal.descripcion.descripcion1,
+            'titulo2': animal.descripcion.titulo2,
+            'descripcion2': animal.descripcion.descripcion2,
+            'titulo3': animal.descripcion.titulo3,
+            'descripcion3': animal.descripcion.descripcion3,
+            'titulo4': animal.descripcion.titulo4,
+            'descripcion4': animal.descripcion.descripcion4
+        } | json_encode | e('html_attr') }}"
+        style="width: 100px; height: 100px; cursor: pointer;">
     {% endfor %}
 </div>
 
@@ -72,7 +79,14 @@
         <!-- Columna derecha (Blanca) -->
         <div class="col-md-8 bg-light p-3">
             <h5>Descripción</h5>
-            <p id="animal-descripcion"></p>
+            <p id="animal-titulo1"></p>
+            <p id="animal-descripcion1"></p>
+            <p id="animal-titulo2"></p>
+            <p id="animal-descripcion2"></p>
+            <p id="animal-titulo3"></p>
+            <p id="animal-descripcion3"></p>
+            <p id="animal-titulo4"></p>
+            <p id="animal-descripcion4"></p>
         </div>
     </div>
 </div>
@@ -90,9 +104,15 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("animal-familia").textContent = animalData.familia || "Desconocido";
             document.getElementById("animal-genero").textContent = animalData.genero || "Desconocido";
             document.getElementById("animal-especie").textContent = animalData.especie || "Desconocido";
-            document.getElementById("animal-descripcion").textContent = animalData.descripcion || "No disponible";
+            document.getElementById("animal-titulo1").textContent = animalData.titulo1 || "No disponible";
+            document.getElementById("animal-descripcion1").textContent = animalData.descripcion1 || "No disponible";
+            document.getElementById("animal-titulo2").textContent = animalData.titulo2 || "No disponible";
+            document.getElementById("animal-descripcion2").textContent = animalData.descripcion2 || "No disponible";
+            document.getElementById("animal-titulo3").textContent = animalData.titulo3 || "No disponible";
+            document.getElementById("animal-descripcion3").textContent = animalData.descripcion3 || "No disponible";
+            document.getElementById("animal-titulo4").textContent = animalData.titulo4 || "No disponible";
+            document.getElementById("animal-descripcion4").textContent = animalData.descripcion4 || "No disponible";
 
-            // Mostrar la tarjeta con los datos del animal seleccionado
             document.getElementById("animal-info").style.display = "block";
         });
     });

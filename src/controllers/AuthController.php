@@ -96,7 +96,6 @@ class AuthController {
     
 
     public function logout() {
-        // Eliminamos la cookie de usuario
         setcookie('user_id', '', time() - 3600, "/", "", false, true);
         header("Location: /");
         exit;
