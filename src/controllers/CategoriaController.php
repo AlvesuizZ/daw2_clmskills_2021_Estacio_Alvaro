@@ -23,7 +23,8 @@ class CategoriaController{
 
     public function index() {
         $user_id = $_SESSION['user_id'] ?? null;
-        echo $this->twig->render('categorias2.html.twig',  ['user_id' => $user_id]);
+        $categories = $this->categoryModel->getAll();
+        echo $this->twig->render('categorias2.html.twig',  ['user_id' => $user_id, 'categories' => $categories]);
     }
 
     public function index2() {

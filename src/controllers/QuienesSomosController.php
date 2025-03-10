@@ -17,6 +17,7 @@ class QuienesSomosController {
     }
 
     public function index() {
+        session_start();
         $categories = $this->categoryModel->getAll();
         echo $this->twig->render('quienesSomos.html.twig', [
             'user_id' => $_SESSION['user_id'],

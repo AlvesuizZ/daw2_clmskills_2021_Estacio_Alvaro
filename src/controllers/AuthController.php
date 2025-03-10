@@ -6,12 +6,14 @@ use Twig\Environment;
 use Twig\Loader\FileSystemLoader;
 use App\Models\User;
 use App\Models\Database;
+use App\Models\Category;
 
 class AuthController {
 
     private $twig;
     private $userModel;
     private $db;
+    private $categoryModel;
 
     public function __construct() {
         session_start();
@@ -19,16 +21,21 @@ class AuthController {
         $loader = new FilesystemLoader(__DIR__ . '/../views');
         $this->twig = new Environment($loader);
         $this->userModel = new User();
+        $this->categoryModel = new Category();
     }
 
     public function showRegister() {
+        session_start();
+        $categories = $this->categoryModel->getAll();
         $user_id = $_SESSION['user_id'] ?? null;
-        echo $this->twig->render('register.html.twig', ['user_id' => $user_id]);
+        echo $this->twig->render('register.html.twig', ['user_id' => $user_id, 'categories' => $categories]);
     }
 
     public function showLogIn() {
+        session_start();
+        $categories = $this->categoryModel->getAll();
         $user_id = $_SESSION['user_id'] ?? null;
-        echo $this->twig->render('login.html.twig', ['user_id' => $user_id]);
+        echo $this->twig->render('login.html.twig', ['user_id' => $user_id, 'categories' => $categories]);
     }
 
     public function login() {

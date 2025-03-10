@@ -20,6 +20,7 @@ class ContactoController {
     }
 
     public function index() {
+        session_start();
         $categories = $this->categoryModel->getAll();
         echo $this->twig->render('contacto.html.twig', [
             'user_id' => $_SESSION['user_id'],

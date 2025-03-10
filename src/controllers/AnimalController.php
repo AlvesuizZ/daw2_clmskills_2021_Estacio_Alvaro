@@ -35,11 +35,12 @@ class AnimalController {
         $animals = $this->animalModel->getPaginated($limit, $offset);
         $totalAnimales = $this->animalModel->countAll();
         $totalPages = ceil($totalAnimales / $limit);
-
+        $categories = $this->categoryModel->getAll();
         echo $this->twig->render('GestionAnimals.html.twig', [
             'animals' => $animals,
             'currentPage' => $page,
             'totalPages' => $totalPages,
+            'categories' => $categories,
             'user_id' => $_SESSION['user_id']
         ]);
     }
@@ -247,6 +248,7 @@ class AnimalController {
     
 
     public function showByCategory($idcategoria) {
+        session_start();
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $limit = 5;
         $offset = ($page - 1) * $limit;
@@ -270,7 +272,7 @@ class AnimalController {
         $user_id = $_SESSION['user_id'] ?? null;
     
         echo $this->twig->render('animals.html.twig', [
-            'user' => $_SESSION['user'] ?? null,
+            'user' => $_SESSION['user_id'] ?? null,
             'animals' => $animals,
             'categories' => $categories,
             'idcategoria' => $idcategoria,
