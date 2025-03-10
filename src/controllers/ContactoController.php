@@ -22,7 +22,7 @@ class ContactoController {
     public function index() {
         $categories = $this->categoryModel->getAll();
         echo $this->twig->render('contacto.html.twig', [
-            'user_id' => $_COOKIE['user_id'],
+            'user_id' => $_SESSION['user_id'],
             'categories' => $categories
         ]);
     }
@@ -44,13 +44,13 @@ class ContactoController {
                 }
     
                 
-                $registrado = isset($_COOKIE['user_id']) ? 1 : 0;
+                $registrado = isset($_SESSION['user_id']) ? 1 : 0;
     
                 $this->contactoModel->insert($nombre, $email, $comentario, $registrado);
                 $categories = $this->categoryModel->getAll();
                 echo $this->twig->render('contacto.html.twig', [
                     'success' => "Mensaje enviado correctamente.",
-                    'user_id' => $_COOKIE['user_id'],
+                    'user_id' => $_SESSION['user_id'],
                     'categories' => $categories
                 ]);
                 return;

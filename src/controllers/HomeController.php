@@ -20,7 +20,7 @@ class HomeController {
     public function index() {
         session_start();
     
-        $user_id = $_COOKIE['user_id'] ?? null;
+        $user_id = $_SESSION['user_id'] ?? null;
 
         $categories = $this->categoryModel->getAll();
 

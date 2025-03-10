@@ -22,18 +22,18 @@ class CategoriaController{
     }
 
     public function index() {
-        $user_id = $_COOKIE['user_id'] ?? null;
+        $user_id = $_SESSION['user_id'] ?? null;
         echo $this->twig->render('categorias2.html.twig',  ['user_id' => $user_id]);
     }
 
     public function index2() {
         $categories = $this->categoryModel->getAll();
-        $user_id = $_COOKIE['user_id'] ?? null;
+        $user_id = $_SESSION['user_id'] ?? null;
         echo $this->twig->render('categorias.html.twig', ['categories' => $categories, 'user_id' => $user_id]);
     }
 
     public function create() {
-        $user_id = $_COOKIE['user_id'] ?? null;
+        $user_id = $_SESSION['user_id'] ?? null;
         $categories = $this->categoryModel->getAll();
         echo $this->twig->render('createCategory.html.twig', ['categories' => $categories, 'user_id' => $user_id]);
     }
@@ -65,7 +65,7 @@ class CategoriaController{
 
     public function edit($id) {
         $categories = $this->categoryModel->getAll();
-        $user_id = $_COOKIE['user_id'] ?? null;
+        $user_id = $_SESSION['user_id'] ?? null;
         $categoria = $this->categoryModel->find($id);
         if (!$categoria) {
             echo "Categoría no encontrada";

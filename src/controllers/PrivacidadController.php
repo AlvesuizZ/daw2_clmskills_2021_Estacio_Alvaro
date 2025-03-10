@@ -19,7 +19,7 @@ class PrivacidadController {
     public function index() {
         $categories = $this->categoryModel->getAll();
         echo $this->twig->render('privacidad.html.twig', [
-            'user_id' => $_COOKIE['user_id'],
+            'user_id' => $_SESSION['PHPSESSID'],
             'categories' => $categories]
         );
     }

@@ -22,7 +22,8 @@ class AnimalController {
 
     public function index() {
         session_start();
-        if (!isset($_COOKIE['user_id'])) {
+
+        if (!isset($_SESSION['user_id'])) {
             header("Location: /login");
             exit();
         }
@@ -39,13 +40,13 @@ class AnimalController {
             'animals' => $animals,
             'currentPage' => $page,
             'totalPages' => $totalPages,
-            'user_id' => $_COOKIE['user_id']
+            'user_id' => $_SESSION['user_id']
         ]);
     }
 
     public function nuevo() {
         session_start();
-        if (!isset($_COOKIE['user_id'])) {
+        if (!isset($_SESSION['user_id'])) {
             header("Location: /login");
             exit();
         }
@@ -53,13 +54,13 @@ class AnimalController {
         $categories = $this->categoryModel->getAll();
         echo $this->twig->render('crearAnimal.html.twig', [
             'categories' => $categories,
-            'user_id' => $_COOKIE['user_id']
+            'user_id' => $_SESSION['user_id']
         ]);
     }
     
     public function guardar() {
         session_start();
-        if (!isset($_COOKIE['user_id'])) {
+        if (!isset($_SESSION['user_id'])) {
             header("Location: /login");
             exit();
         }
@@ -70,7 +71,7 @@ class AnimalController {
                     $nombrecomun = $_POST['nombrecomun'];
                     $nombrecientifico = $_POST['nombrecientifico'];
                     $idcategoria = $_POST['idcategoria'];
-                    $codusuario = $_COOKIE['user_id'];
+                    $codusuario = $_SESSION['user_id'];
         
 
                     $foto = null;
@@ -111,7 +112,7 @@ class AnimalController {
                     header("Location: /gestionAnimals?success=Animal agregado correctamente");
                     exit;
                 }
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 die("Error al insertar el animal: " . $e->getMessage());
             }
         }
@@ -121,7 +122,7 @@ class AnimalController {
 
         public function editar($id) {
             session_start();
-            if (!isset($_COOKIE['user_id'])) {
+            if (!isset($_SESSION['user_id'])) {
                 header("Location: /login");
                 exit();
             }
@@ -130,7 +131,7 @@ class AnimalController {
 
             $categories = $this->categoryModel->getAll();
 
-            if (!$animal || $animal['codusuario'] != $_COOKIE['user_id']) {
+            if (!$animal || $animal['codusuario'] != $_SESSION['user_id']) {
                 $_SESSION['error'] = "No tienes permiso para modificar este animal.";
                 header("Location: /gestionAnimals");
                 exit();
@@ -147,13 +148,13 @@ class AnimalController {
             'categories' => $categories,
             'taxonomia' => $taxonomia,
             'descripciones' => $descripciones,
-            'user_id' => $_COOKIE['user_id']
+            'user_id' => $_SESSION['user_id']
         ]);
     }
     
     public function actualizar($id) {
         session_start();
-        if (!isset($_COOKIE['user_id'])) {
+        if (!isset($_SESSION['user_id'])) {
             header("Location: /login");
             exit();
         }
@@ -164,7 +165,7 @@ class AnimalController {
                 $nombrecientifico = trim($_POST['nombrecientifico']);
                 $idcategoria = $_POST['idcategoria'] ?? null;
                 $resumen = trim($_POST['resumen']);
-                $codusuario = $_COOKIE['user_id']; 
+                $codusuario = $_SESSION['user_id']; 
 
                 $renio = $_POST['renio'];
                 $clase = $_POST['clase'];
@@ -188,10 +189,9 @@ class AnimalController {
                 }
     
                 if (empty($nombrecomun) || empty($nombrecientifico) || empty($idcategoria) || empty($resumen)) {
-                    throw new Exception("Todos los campos obligatorios deben ser completados.");
+                    throw new \Exception("Todos los campos obligatorios deben ser completados.");
                 }
-    
-                // Manejo de la foto (si se sube una nueva foto, se procesa)
+
                 $foto = isset($_FILES['foto']) && $_FILES['foto']['error'] === 0 
                     ? file_get_contents($_FILES['foto']['tmp_name']) 
                     : $animal['foto']; 
@@ -216,7 +216,7 @@ class AnimalController {
 
     public function eliminar($id) {
         session_start();
-        if (!isset($_COOKIE['user_id'])) {
+        if (!isset($_SESSION['user_id'])) {
             header("Location: /login");
             exit();
         }
@@ -228,7 +228,7 @@ class AnimalController {
                 throw new \Exception("El animal no existe.");
             }
     
-            if ($animal['codusuario'] != $_COOKIE['user_id']) {
+            if ($animal['codusuario'] != $_SESSION['user_id']) {
                 throw new \Exception("No tienes permiso para eliminar este animal.");
             }
     
@@ -267,7 +267,7 @@ class AnimalController {
         }
     
         $categories = $this->categoryModel->getAll();
-        $user_id = $_COOKIE['user_id'] ?? null;
+        $user_id = $_SESSION['user_id'] ?? null;
     
         echo $this->twig->render('animals.html.twig', [
             'user' => $_SESSION['user'] ?? null,

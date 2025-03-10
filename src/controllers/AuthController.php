@@ -22,12 +22,12 @@ class AuthController {
     }
 
     public function showRegister() {
-        $user_id = $_COOKIE['user_id'] ?? null;
+        $user_id = $_SESSION['user_id'] ?? null;
         echo $this->twig->render('register.html.twig', ['user_id' => $user_id]);
     }
 
     public function showLogIn() {
-        $user_id = $_COOKIE['user_id'] ?? null;
+        $user_id = $_SESSION['user_id'] ?? null;
         echo $this->twig->render('login.html.twig', ['user_id' => $user_id]);
     }
 
@@ -39,7 +39,8 @@ class AuthController {
             $user = $this->userModel->login($email, $password);
             if ($user) {
                 error_log('a');
-                setcookie('user_id', $user['codusuario'], time() + (7 * 24 * 60 * 60), "/", "", false, true);
+                //setcookie('user_id', $user['codusuario'], time() + (7 * 24 * 60 * 60), "/", "", false, true);
+                $_SESSION['user_id'] = $user['codusuario'];
                 header("Location: /");
                 exit;
             } else {
@@ -65,7 +66,7 @@ class AuthController {
 
             if (empty($nombre) || empty($direccion) || empty($email) || empty($password) || empty($telef)) {
                 echo "Todos los campos son obligatorios.";
-                return;
+                exit;
             }
 
             if ($this->userModel->register($nombre, $direccion, $email, $password, $telef)) {
