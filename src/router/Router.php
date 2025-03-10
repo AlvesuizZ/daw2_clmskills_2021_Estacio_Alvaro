@@ -70,10 +70,11 @@ class Router{
             error_log("Cargando controlador: " . $controllerClass);
             
             $action = $route['action'];
+            error_log('1.' . $controllerClass);
+            error_log('1. ' . $action);
     
             if (class_exists($controllerClass) && method_exists($controllerClass, $action)) {
                 $controller = new $controllerClass();
-    
                 if ($paramValue !== null) {
                     error_log("Parámetro ID: " . $paramValue);
                     $controller->$action($paramValue);
@@ -81,6 +82,8 @@ class Router{
                     $controller->$action(); 
                 }
             } else {
+                error_log($controllerClass);
+                error_log($action);
                 http_response_code(404);
                 echo '404 - Controlador o acción no encontrados';
             }

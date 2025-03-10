@@ -8,7 +8,11 @@ class Category {
     private $db;
 
     public function __construct() {
-        $this->db = Database::getInstance()->getConnection();
+        try {
+            $this->db = Database::getInstance()->getConnection();
+        } catch (\Throwable $th) {
+            echo ("Error en la base de datos");
+        }
     }
 
     public function getAll() {

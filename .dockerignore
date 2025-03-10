@@ -1,0 +1,40 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn.lock
+package-lock.json
+
+# Composer
+/vendor/
+
+# PHP
+*.log
+*.sql
+*.sqlite
+/.vscode/
+/.idea/
+/phpunit.result.cache
+/.php_cs.cache
+/.phpstorm.meta.php
+
+# TypeScript
+*.tsbuildinfo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDEs and Editors
+.vscode/
+.idea/
+
+# JetBrains IDE (e.g., PhpStorm, WebStorm, IntelliJ IDEA)
+.idea/
+
+# Miscellaneous
+*.bak
+*.swp
+*.swo
+*.tmp
+*.log

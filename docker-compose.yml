@@ -1,0 +1,10 @@
+services:
+    app:
+      build:
+        context: .
+        dockerfile: dockerfile.yml
+      ports: 
+        - 3000:8000
+      command: 
+        bash -c "composer start"
+      
