@@ -70,10 +70,10 @@ document.addEventListener("DOMContentLoaded", () => {
             categoriasContainer.innerHTML = "";
             categorias.forEach((categoria) => {
                 const div = document.createElement("div");
-                div.className = "col-md-4 mb-4";
+                div.className = "col-md-4 mb-4 categorias-card";
                 div.innerHTML = `
                 <div class="card shadow-sm border-0">
-                    <img src="data:image/jpeg;base64,${categoria.foto}" class="card-img-top" alt="${categoria.nombre}">
+                    <img src="data:image/jpeg;base64,${categoria.foto}" class="card-img-top img-fluid categorias-img" alt="${categoria.nombre}">
                     <div class="card-body text-center">
                         <h5 class="card-title">${categoria.nombre}</h5>
                         <div class="d-flex justify-content-center gap-2 mt-3">

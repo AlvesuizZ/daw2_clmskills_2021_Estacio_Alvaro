@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!form)
         return;
     let nombreValido = false;
-    // 🚀 Validación asíncrona para verificar si el nombre ya existe
+
     function validarNombreCategoria(nombre) {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield fetch(`/categorias/verificar-nombre?nombre=${nombre}`);
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return !data.exists;
         });
     }
-    // Validación del nombre al perder el foco
+
     nombreInput.addEventListener("blur", () => __awaiter(void 0, void 0, void 0, function* () {
         if (nombreInput.value.length >= 3) {
             nombreValido = yield validarNombreCategoria(nombreInput.value);
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
             else {
                 nombreInput.classList.remove("is-invalid");
             }
-            // 🚀 **Revalidar nombre único antes de enviar**
+            // **Revalidar nombre único antes de enviar**
             if (!nombreValido) {
                 nombreInput.classList.add("is-invalid");
                 valid = false;
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
             if (!valid) {
-                event.preventDefault(); // ⛔ Evita el envío del formulario si hay errores
+                event.preventDefault(); // Evita el envío del formulario si hay errores
             }
         });
     });

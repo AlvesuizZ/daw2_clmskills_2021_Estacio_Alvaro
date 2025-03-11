@@ -104,7 +104,7 @@ class AuthController {
     
 
     public function logout() {
-        setcookie('user_id', '', time() - 3600, "/", "", false, true);
+        session_destroy();
         header("Location: /");
         exit;
     }
