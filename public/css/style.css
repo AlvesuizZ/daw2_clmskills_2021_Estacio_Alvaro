@@ -1,4 +1,6 @@
-
+.container {
+    padding-top: 7rem;
+}
 
 .animal-gallery {
     display: flex;
@@ -31,5 +33,16 @@
 }
 .cookie-banner button {
     margin-left: 10px;
+}
+
+.category-img {
+    width: 140px;  
+    height: 140px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.category-container {
+    margin-bottom: 30px;
 }
 
