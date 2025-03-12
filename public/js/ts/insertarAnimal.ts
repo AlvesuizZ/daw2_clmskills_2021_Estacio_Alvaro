@@ -12,11 +12,25 @@ document.addEventListener("DOMContentLoaded", () => {
     let nombreCientificoValido = false;
 
     // Función para validar nombres únicos de forma asíncrona
-    async function validarNombre(nombre: string, tipo: string): Promise<boolean> {
-        const response = await fetch(`/animales/verificar-${tipo}?${tipo}=${nombre}`);
-        const data = await response.json();
-        return !data.exists;
+    async function validarNombre(nombre: string, tipo: string, idAnimal: string | null = null): Promise<boolean> {
+        let url = `/animales/verificar-${tipo}?${tipo}=${encodeURIComponent(nombre)}`;
+        
+        if (idAnimal) {
+            url += `&id=${idAnimal}`;
+        }
+    
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error("Error en la petición");
+            
+            const data = await response.json();
+            return !data.exists; // Retorna `true` si el nombre está disponible
+        } catch (error) {
+            console.error("Error validando el nombre:", error);
+            return false; // En caso de error, asumimos que no es válido para evitar duplicados
+        }
     }
+    
 
     // Validación asíncrona de nombre común
     nombreInput.addEventListener("blur", async () => {

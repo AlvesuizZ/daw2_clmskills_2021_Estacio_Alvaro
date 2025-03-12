@@ -5,6 +5,29 @@
 {% block content %}
 <h2>Catálogo de animales</h2>
 
+<!-- Paginación con Bootstrap -->
+<nav aria-label="Paginación">
+    <ul class="pagination justify-content-center">
+        {% if currentPage > 1 %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ currentPage - 1 }}&idcategoria={{ idcategoria }}">Anterior</a>
+            </li>
+        {% endif %}
+
+        {% for i in 1..totalPages %}
+            <li class="page-item {{ i == currentPage ? 'active' : '' }}">
+                <a class="page-link" href="?page={{ i }}&idcategoria={{ idcategoria }}">{{ i }}</a>
+            </li>
+        {% endfor %}
+
+        {% if currentPage < totalPages %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ currentPage + 1 }}&idcategoria={{ idcategoria }}">Siguiente</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+
 
 <div class="d-flex flex-wrap justify-content-center">
    {% for animal in animals %}
@@ -35,30 +58,6 @@
     {% endfor %}
 </div>
 
-
-
-<!-- Paginación con Bootstrap -->
-<nav aria-label="Paginación">
-    <ul class="pagination justify-content-center">
-        {% if currentPage > 1 %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ currentPage - 1 }}&idcategoria={{ idcategoria }}">Anterior</a>
-            </li>
-        {% endif %}
-
-        {% for i in 1..totalPages %}
-            <li class="page-item {{ i == currentPage ? 'active' : '' }}">
-                <a class="page-link" href="?page={{ i }}&idcategoria={{ idcategoria }}">{{ i }}</a>
-            </li>
-        {% endfor %}
-
-        {% if currentPage < totalPages %}
-            <li class="page-item">
-                <a class="page-link" href="?page={{ currentPage + 1 }}&idcategoria={{ idcategoria }}">Siguiente</a>
-            </li>
-        {% endif %}
-    </ul>
-</nav>
 
 <!-- Tarjeta de información del animal -->
 <div id="animal-info" class="container mt-4" style="display: none;">
@@ -92,30 +91,41 @@
 </div>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".animal-img").forEach(img => {
+    const animalImages = document.querySelectorAll(".animal-img");
+
+    function mostrarInformacion(animalData) {
+        document.getElementById("animal-title").textContent = animalData.nombre;
+        document.getElementById("animal-reino").textContent = animalData.reino || "Desconocido";
+        document.getElementById("animal-filo").textContent = animalData.filo || "Desconocido";
+        document.getElementById("animal-clase").textContent = animalData.clase || "Desconocido";
+        document.getElementById("animal-orden").textContent = animalData.orden || "Desconocido";
+        document.getElementById("animal-familia").textContent = animalData.familia || "Desconocido";
+        document.getElementById("animal-genero").textContent = animalData.genero || "Desconocido";
+        document.getElementById("animal-especie").textContent = animalData.especie || "Desconocido";
+        document.getElementById("animal-titulo1").textContent = animalData.titulo1 || "No disponible";
+        document.getElementById("animal-descripcion1").textContent = animalData.descripcion1 || "No disponible";
+        document.getElementById("animal-titulo2").textContent = animalData.titulo2 || "No disponible";
+        document.getElementById("animal-descripcion2").textContent = animalData.descripcion2 || "No disponible";
+        document.getElementById("animal-titulo3").textContent = animalData.titulo3 || "No disponible";
+        document.getElementById("animal-descripcion3").textContent = animalData.descripcion3 || "No disponible";
+        document.getElementById("animal-titulo4").textContent = animalData.titulo4 || "No disponible";
+        document.getElementById("animal-descripcion4").textContent = animalData.descripcion4 || "No disponible";
+
+        document.getElementById("animal-info").style.display = "block";
+    }
+
+    animalImages.forEach(img => {
         img.addEventListener("click", function () {
             let animalData = JSON.parse(this.dataset.animal);
-
-            document.getElementById("animal-title").textContent = animalData.nombre;
-            document.getElementById("animal-reino").textContent = animalData.reino || "Desconocido";
-            document.getElementById("animal-filo").textContent = animalData.filo || "Desconocido";
-            document.getElementById("animal-clase").textContent = animalData.clase || "Desconocido";
-            document.getElementById("animal-orden").textContent = animalData.orden || "Desconocido";
-            document.getElementById("animal-familia").textContent = animalData.familia || "Desconocido";
-            document.getElementById("animal-genero").textContent = animalData.genero || "Desconocido";
-            document.getElementById("animal-especie").textContent = animalData.especie || "Desconocido";
-            document.getElementById("animal-titulo1").textContent = animalData.titulo1 || "No disponible";
-            document.getElementById("animal-descripcion1").textContent = animalData.descripcion1 || "No disponible";
-            document.getElementById("animal-titulo2").textContent = animalData.titulo2 || "No disponible";
-            document.getElementById("animal-descripcion2").textContent = animalData.descripcion2 || "No disponible";
-            document.getElementById("animal-titulo3").textContent = animalData.titulo3 || "No disponible";
-            document.getElementById("animal-descripcion3").textContent = animalData.descripcion3 || "No disponible";
-            document.getElementById("animal-titulo4").textContent = animalData.titulo4 || "No disponible";
-            document.getElementById("animal-descripcion4").textContent = animalData.descripcion4 || "No disponible";
-
-            document.getElementById("animal-info").style.display = "block";
+            mostrarInformacion(animalData);
         });
     });
+
+    // Simular clic en la primera imagen si existe
+    if (animalImages.length > 0) {
+        let primerAnimalData = JSON.parse(animalImages[0].dataset.animal);
+        mostrarInformacion(primerAnimalData);
+    }
 });
 </script>
 

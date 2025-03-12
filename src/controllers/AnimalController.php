@@ -41,7 +41,8 @@ class AnimalController {
             'currentPage' => $page,
             'totalPages' => $totalPages,
             'categories' => $categories,
-            'user_id' => $_SESSION['user_id']
+            'user_id' => $_SESSION['user_id'],
+            'success' => $_COOKIE['success'] ?? null
         ]);
     }
 
@@ -235,7 +236,7 @@ class AnimalController {
     
             $this->animalModel->delete($id);
     
-            $_SESSION['success'] = "Animal eliminado correctamente.";
+            setcookie("success", "❌ Animal eliminado correctamente", time() + 5, "/");
             header("Location: /gestionAnimals");
             exit();
         } catch (\Exception $e) {
@@ -303,7 +304,9 @@ class AnimalController {
 
     public function verificarNombre() {
         $nombre = $_GET['nombre'] ?? '';
-        $existe = $this->animalModel->existeNombre($nombre);
+        $idAnimal = $_GET['id'] ?? null; // En caso de edición
+    
+        $existe = $this->animalModel->existeNombre($nombre, $idAnimal);
         echo json_encode(["exists" => $existe]);
     }
     

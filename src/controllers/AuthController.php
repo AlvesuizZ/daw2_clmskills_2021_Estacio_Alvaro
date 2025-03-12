@@ -25,14 +25,12 @@ class AuthController {
     }
 
     public function showRegister() {
-        session_start();
         $categories = $this->categoryModel->getAll();
         $user_id = $_SESSION['user_id'] ?? null;
         echo $this->twig->render('register.html.twig', ['user_id' => $user_id, 'categories' => $categories]);
     }
 
     public function showLogIn() {
-        session_start();
         $categories = $this->categoryModel->getAll();
         $user_id = $_SESSION['user_id'] ?? null;
         echo $this->twig->render('login.html.twig', ['user_id' => $user_id, 'categories' => $categories]);

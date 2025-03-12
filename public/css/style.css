@@ -23,7 +23,7 @@ html, body {
 
 
 .container {
-    padding-top: 7rem;
+    padding-top: 5rem;
 }
 
 .animal-gallery {
@@ -94,3 +94,20 @@ html, body {
     object-fit: cover; 
 }
 
+.pagination .page-item .page-link {
+    color: black; 
+    background-color: white; 
+    border: 1px solid #dee2e6; 
+}
+
+.pagination .page-item .page-link:hover {
+    color: white; 
+    background-color: darkgreen;
+    border-color: darkgreen;
+}
+
+.pagination .page-item.active .page-link {
+    color: white;
+    background-color: green; 
+    border-color: green;
+}
