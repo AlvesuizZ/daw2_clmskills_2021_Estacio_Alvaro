@@ -3,6 +3,13 @@
 {% block content %}
 <h2>GESTIÓN DE ANIMALES</h2>
 
+{% if success %}
+    <div class="alert alert-danger" role="alert">
+        ❌ El animal ha sido eliminado correctamente
+    </div>
+{% endif %}
+
+
 <!-- Tabla de animales -->
 <table class="table mt-4">
     <thead>

@@ -144,8 +144,14 @@ class Animal {
     }
     
 
-    public function existeNombre($nombre) {
-        $stmt = $this->db->prepare("SELECT COUNT(*) FROM animales WHERE nombrecomun = :nombre");
+    public function existeNombre($nombre, $idAnimal = null) {
+        if ($idAnimal) {
+            $stmt = $this->db->prepare("SELECT COUNT(*) FROM animales WHERE nombrecomun = :nombre AND idanimal != :id");
+            $stmt->bindParam(':id', $idAnimal, PDO::PARAM_INT);
+        } else {
+            $stmt = $this->db->prepare("SELECT COUNT(*) FROM animales WHERE nombrecomun = :nombre");
+        }
+    
         $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchColumn() > 0;
