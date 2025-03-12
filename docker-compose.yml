@@ -7,4 +7,17 @@ services:
         - 3000:8000
       command: 
         bash -c "composer start"
-      
+    db:
+      image: mariadb:10.6
+      environment:
+        DB_CONNECTION: mysql
+        MYSQL_USER: root
+        MYSQL_PASSWORD: root
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: skills
+      ports:
+        - 3306:3306
+      volumes:
+        - ./data:/var/lib/mysql
+      networks:
+        - app
