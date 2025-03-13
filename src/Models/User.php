@@ -22,15 +22,16 @@ class User {
         return false;
     }
 
-    public function register($nombre, $direccion, $email, $password, $telef) {
+    public function register($nombre, $direccion, $email, $password, $telef, $perfil = 0) {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $fechaalta = date('Y-m-d');
         $stmt = $this->db->prepare("
-            INSERT INTO usuarios (nombre, direccion, email, clave, telef, fechaalta) 
-            VALUES (:nombre, :direccion, :email, :clave, :telef, :fechaalta)
+            INSERT INTO usuarios (perfil, nombre, direccion, email, clave, telef, fechaalta) 
+            VALUES (:perfil, :nombre, :direccion, :email, :clave, :telef, :fechaalta)
         ");
         
         return $stmt->execute([
+            'perfil' => $perfil,
             'nombre' => $nombre,
             'direccion' => $direccion,
             'email' => $email,

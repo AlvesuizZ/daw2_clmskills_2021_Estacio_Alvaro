@@ -1,11 +1,11 @@
 <?php
 
-namespace App\controllers;
+namespace App\Controllers;
 
 use Twig\Environment;
 use PDO;
 use App\Models\Database;
-use Twig\Loader\FileSystemLoader;
+use Twig\Loader\FilesystemLoader;
 use App\Models\Category;
 
 class CategoriaController{

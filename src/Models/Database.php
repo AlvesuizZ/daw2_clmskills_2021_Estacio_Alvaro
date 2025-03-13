@@ -10,7 +10,7 @@ class Database {
 
     private function __construct() {
         try {
-            $this->pdo = new PDO("mysql:host=localhost;dbname=skills", "root", "");
+            $this->pdo = new PDO("mysql:host=mariadb-php-app;dbname=skills", "root", "root");
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             die("Error de conexión: " . $e->getMessage());
