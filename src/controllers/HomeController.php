@@ -25,17 +25,8 @@ class HomeController {
         $categories = $this->categoryModel->getAll();
 
         foreach ($categories as &$category) {
-            if (!empty($category['foto'])) {
-                $img = imagecreatefromstring($category['foto']);
-                if ($img !== false) {
-                    ob_start();
-                    imagewebp($img, null, 80); // Convertir a WebP con calidad del 80%
-                    $webpData = ob_get_clean();
-                    imagedestroy($img);
-                    $category['foto_base64'] = 'data:image/webp;base64,' . base64_encode($webpData);
-                } else {
-                    $category['foto_base64'] = 'data:image/jpeg;base64,' . base64_encode($category['foto']); // Fallback a JPEG si falla
-                }
+            if ($category['foto']) {
+                $category['foto_base64'] = 'data:image/jpeg;base64,' . base64_encode($category['foto']);
             }
         }
 
