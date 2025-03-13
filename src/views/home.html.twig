@@ -13,8 +13,7 @@
             {% for category in categories %}
                 <div class="col-12 col-md-4 col-lg-2 text-center category-container">
                     <a href="#">
-                        <img src="{{ category.foto }}" alt="{{ category.nombre }}" width="140" height="140" class="img-fluid rounded-circle" loading="lazy">
-
+                        <img src="{{ category.foto }}" alt="{{ category.nombre }}" class="category-img img-fluid rounded-circle" width="140" height="140">
                     </a>
                     <p>{{ category.nombre }}</p>
                     <p><a class="btn btn-success" href="/category/{{ category.idcategoria }}">Ver detalles &raquo;</a></p>
