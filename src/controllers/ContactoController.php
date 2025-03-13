@@ -23,7 +23,7 @@ class ContactoController {
         session_start();
         $categories = $this->categoryModel->getAll();
         echo $this->twig->render('contacto.html.twig', [
-            'user_id' => $_SESSION['user_id'],
+            'user_id' => $_SESSION['user_id'] ?? null,
             'categories' => $categories
         ]);
     }

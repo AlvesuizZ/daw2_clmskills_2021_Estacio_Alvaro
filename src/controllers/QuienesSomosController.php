@@ -20,7 +20,7 @@ class QuienesSomosController {
         session_start();
         $categories = $this->categoryModel->getAll();
         echo $this->twig->render('quienesSomos.html.twig', [
-            'user_id' => $_SESSION['user_id'],
+            'user_id' => $_SESSION['user_id'] ?? null,
             'categories' => $categories
             
         ]);
